@@ -1,0 +1,8 @@
+Q.1 Can the generals ever be 100% sure that their attack is synchronized?
+Generals can never be 100% sure their attack is together. Because one general send message, but maybe other general not get it or get it late. So they not know if attack is same time.
+
+Q.2 How does this problem relate to distributed systems and network protocols?
+This problem same like computers talking in network. One computer send message, but maybe other computer not get it or get it late. So they not sure if they do things together correct.
+
+Q.3 Research how modern internet protocols (like TCP/IP) solve this issue.
+Internet use special rules (like TCP/IP) to fix this. TCP send message again if not get answer. It check if message come right way. This make sure computers talk better, but still not perfect always.
