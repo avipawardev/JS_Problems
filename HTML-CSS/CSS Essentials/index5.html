@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: Gilroy;
+        }
+        #main-name{
+            background-color: #fe6347;
+            padding: 10px;
+            text-align: center;
+        }
+        footer{
+            background-color: #fe6347;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        #main-name h2{
+            color: royalblue;
+        }
+        #main-name a{
+            text-decoration: none;
+            color: white;
+        }
+        #about img{
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+        #about{
+            padding: 10px;
+        }
+        #projects{
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 20px;
+        }
+        #feedback{
+            padding: 15px;
+        }
+        #feedback :nth-child(4) input{
+            padding: 30px;
+        }
+        button{
+            border: none;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 5px;
+            margin-top: 5px;
+            color: white;
+            background-color: royalblue;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-name">
+        <h2 >Welcome to my Portfolio</h2>
+        <nav>
+            <a href="#">About </a> <a href="#">Projects </a><a href="#">Contact</a>
+        </nav>
+    </header>
+    <section id="about">
+        <h3>About Me</h3>
+        <p>Hello! I'm a web developer with a passion for creating functional and beautiful web applications</p>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq_QL5Zl_fF21gGGxcx73Hi4xiQZKnJL7VqQ&s" alt="a picture of me">
+    </section>
+    <section>
+        <h3>Projects</h3>
+        <div id="projects">
+            <h5>Project One : Personal Blog</h5>
+            <p>screenshot of my personal blog project</p>
+            <p>A personal blog where I write about web development, programming, and technology</p>
+            <a href="#">View Project</a>
+            <ul>
+                <p>Used Technology</p>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h3>Project Two: E-commerce Site</h3>
+        <div id="projects">
+            <h5>Project One : Personal Blog</h5>
+            <p>screenshot of my personal blog project</p>
+            <p>An e-commerce website built to simulate a real-world online shopping experience.</p>
+            <a href="#">View Project</a>
+            <ul>
+                <p>Used Technology</p>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </div>
+    </section>
+    <section id="feedback">
+        <h3>Contact Me</h3>
+        <form action="">
+            <div>
+                <label for="">Full Name:</label>
+            <input type="text">
+            </div>
+            <div>
+                <label for="">Email   :      </label>
+            <input type="text">
+            </div>
+            <div>
+                <label for="">Message:</label>
+            
+            </div>
+            <div>
+                <input type="text">
+            </div>
+            <button>Submit</button>
+        </form>
+    </section>
+    <footer>
+        <p>⭕2024 My Portfolio</p>
+        <p>Follow me on <a href="#">Twiter</a> || <a href="#">Github</a></p>
+    </footer>
+</body>
+</html>
