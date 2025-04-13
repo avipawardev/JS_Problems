@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .nav .section1 a {
+      color: blue;
+    }
+
+    .nav .section2 a {
+      color: green;
+    }
+
+    .nav .section3 a {
+      color: purple;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav a:active {
+      color: orange;
+    }
+
+    .nav .section1 > a {
+      font-weight: bold;
+    }
+
+    .nav a[href^="https"] {
+      color: red !important;
+    }
+  </style>
+</head>
+<body>
+
+  
+  <div class="nav">
+    <div class="section1">
+      <a href="https://example.in">Home</a>
+      <a href="index1.html">About</a>
+      <div>
+        <a href="index4.html">Nested Link 1</a>
+      </div>
+    </div>
+    <div class="section2">
+      <a href="https://contacts.in">Contact</a>
+      <a href="index2.html">Team</a>
+    </div>
+    <div class="section3">
+      <a href="https://services.in">Services</a>
+      <a href="index3.html">Support</a>
+    </div>
+  </div>
+
+</body>
+</html>
