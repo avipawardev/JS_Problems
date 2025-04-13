@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=error" />
+    <title>How the web works</title>
+</head>
+<body>
+    <header>
+        <h1 id="heading-text">How The Web Works</h1>
+    </header>
+    <section id="section-button">
+<button>Overview:Web Standards</button>
+<button id="next">Next</button>
+    </section>
+    <section id="overview">
+        <p> <b>How the web works</b> provides a high-level description of what happens when you use a web browser to navigate to a web page, explaining the magic that goes on behind the scenes to deliver the relevant code to your computer for the browser to assemble into something you can look at. <br>
+            <u>This theory is not essential</u> to writing web code in the short term, but before long you'll really start to benefit from understanding what's happening in the background.</p>
+        </section>
+<section>
+    <div id="note">
+        <h4><span class="material-symbols-outlined">
+            error
+            </span> Note: This article does not cover how web browsers actually render code into web pages. That's covered in How browsers load websites.</h4>
+    </div>
+</section>
+<table>
+        <thead>
+            <tr>
+                <th>Prerequisites:</th>
+                <td>Basic familiarity with your computer operating system, web browsers, and web technologies.</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Learning outcomes:</th>
+                <td>
+                    <ul>
+                        <li>Clients and servers and their roles in the web.</li>
+                    <li>DNS and how it works at a high level.</li>
+                    <li>The purpose of TCP/IP, HTTP, and packets.</li>
+                    <li>HTTP syntax at a basic level.</li>
+                    <li>Common HTTP response codes (e.g., 200, 301, 403, 404, and 500).</li>
+                    <li>Basic components of a URL (protocol, domain, subdomain, path).</li>
+                </ul>
+                </td>
+            </tr>
+        </tbody>
+</table>
+<section>
+    <button id="new-btn"><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">Clients and servers</a></button>
+    <p>Computers connected to the internet are called clients and servers. A simplified diagram of how they interact might look like this:</p>
+    <img id="server-img" src="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works/simple-client-server.png" alt="web image">
+    <ul>
+        <li>Clients are the typical web user's internet-connected devices (for example, your computer connected to your Wi-Fi, or your phone connected to your mobile network) and web-accessing software available on those devices (usually a web browser like Firefox or Chrome).</li>
+        <li>Servers are computers that store webpages, sites, or apps. When a client wants to access a webpage, a copy of the webpage code is downloaded from the server onto the client machine to be rendered by the browser and displayed to the user.</li>
+    </ul>
+</section>
+    <article>
+        <h1>The other parts of the toolbox</h1>
+        The client and server we've described above don't tell the whole story. There are many other parts involved, and we'll describe them below.
+        
+        <hr> For now, let's imagine that the internet is a road. On one end of the road is the client, which is like your house. On the other end of the road is the server, which is like a shop you want to buy something from.
+    </article>
+    <section>
+        <img src="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works/road.jpg" alt="">
+    <div id="video-box">
+        <h1>For More Click Here ===></h1>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/cpkd4EYYQ8o?si=-_31Si9KfG45GLZU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div id="location">
+        <h1>Our Data Location </h1>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d497698.77490448696!2d77.30125374670206!3d12.954459543640922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1744528245650!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    </section>
+    <form action="" id="mcq">
+        <h1> What is A Client?</h1>
+<div class="input-tag">
+    <label for="">
+        Monterey
+     </label>
+     <input type="checkbox">
+</div>
+        <div class="input-tag">
+            <label for="">
+                Client who is Customer
+             </label>
+             <input type="checkbox">
+        </div>
+         <div class="input-tag">
+            <label for="">
+                Consumer
+             </label>
+             <input type="checkbox">
+         </div>
+         <div class="input-tag">
+            <label for="">
+                a client is a device or software that requests resources
+             </label>
+             <input type="checkbox">
+         </div>
+       <button id="submit-btn">Submit</button>
+    </form>
+    <aside>
+    <h2>Try it out</h2>
+    <ol>
+        <li>Go to the NsLookup.io DNS lookup tool, type in developer.mozilla.org, and press the button.</li>
+    <li>In the results screen, copy the IP Address (the IPv4 address) to your system clipboard.</li>
+<li>Open a new browser tab, paste the IP Address into the address bar and press Enter/Return. You should see MDN load up, proving that the IP address points to it.</li>    
+</ol>
+    </aside>
+    <footer>
+        <hr>
+        Portions of this content are ©1998–2025 by individual mozilla.org contributors. Content available under a Creative Commons license.
+    </footer>
+</body>
+</html>

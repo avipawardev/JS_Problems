@@ -1,0 +1,95 @@
+* {
+  font-family: Gilroy;
+  background-color: rgb(27, 27, 27);
+  color: white;
+  margin: 10px;
+}
+#section-button button {
+  color: white;
+  background-color: rgb(57, 97, 244);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+#section-button button:hover, #submit-btn:hover{
+    background-color: salmon;
+}
+#new-btn{
+    color: white;
+  background-color: rgb(57, 97, 244);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+#new-btn::before{
+content: '#';
+}
+a{
+    text-decoration: none;
+    background:none;
+}
+#submit-btn{
+    color: white;
+  background-color: rgb(57, 97, 244);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+#next{
+    margin-left: 70%;
+}
+#next::after{
+    content: "==>";
+}
+#overview {
+  background-color:grey;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+  font-size: 20px;
+}
+#note{
+    width: 70%;
+    align-items: center;
+    margin-left:13%;
+    background-color: rgb(24, 38, 49);
+    color: white;
+    font-size: 30px;
+    padding: 0px 10px;
+      font-size: 20px;
+}
+table{
+    border: 1px solid rgb(255, 255, 255);
+    margin-left:13%;
+    font-size: 20px;
+}
+#server-img{
+    background-color: white;
+    border-radius: 10px;
+}
+#video-box{
+    margin-left: 25%;
+}
+#location{
+    margin-left: 25%;
+}
+#mcq{
+    background-color: white;
+}
+#mcq h1{
+    color: black;
+    background-color: white;
+}
+.input-tag{
+    font-size: 25px;
+    color: black;
+    background-color: white;
+    border: 1px solid;
+}
+input:focus {
+    background-color: rgb(223, 223, 31);
+  }
