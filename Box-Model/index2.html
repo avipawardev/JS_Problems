@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+
+    #block-element {
+      display: block;
+      border: 2px solid blue;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #f0f8ff;
+    }
+
+    #inline-element {
+      display: inline;
+      background-color: #ffe0b2;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    #inline-block-element {
+      display: inline-block;
+      width: 150px;
+      height: 80px;
+      padding: 10px;
+      margin: 10px;
+      background-color: #d1c4e9;
+      border: 2px solid purple;
+    }
+
+    #hidden-element {
+      display: none;
+      padding: 10px;
+      background-color: #ffcdd2;
+      border: 2px dashed red;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Block-Element:</p>
+        <div id="block-element">I am a block element</div>
+    
+        <p>Inline-Element:</p>
+        <span id="inline-element">I am an inline element</span>
+    
+        <p>Inline-Block-Element:</p>
+        <div id="inline-block-element">I am inline-block</div>
+    
+        <p>Hidden-Element</p>
+        <div id="hidden-element">Now you see me!</div>
+        <button>Toggle-Element</button>
+      </div>
+</body>
+</html>
