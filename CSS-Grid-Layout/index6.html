@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #container{
+       display: grid;
+       grid-template-columns: repeat(4,1fr);
+       /* grid-template-rows: 350px 350px 350px; */
+       background-color: blanchedalmond;
+       justify-content: center;
+       text-align: center;
+       padding: 25px;
+       gap: 45px;
+    }
+    
+    .contant{
+      background-color: rgb(254, 255, 255);
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+      border-radius:5px;
+    }
+
+    .contant>img{
+     width:100%;
+     border-radius:5px;
+    }
+
+    h4{
+     margin-bottom:-12px;
+     margin-top:-2px;
+    }
+    h5{
+      margin-top:14px;
+    }
+   
+   h5+div{
+      background-color: rgb(250, 250, 250);
+      height:25px;
+      margin-top: -15px;
+      width:105px;
+      margin-left:30%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    @media screen and (min-width:768px) and (max-width:1024px){
+      
+      #container{
+       display: grid;
+       grid-template-columns: repeat(3,1fr);
+       /* grid-template-rows: 250px 250px 250px; */
+       background-color: blanchedalmond;
+       justify-content: center;
+       text-align: center;
+       padding:15px;
+       gap:25px;
+    }
+
+    .contant{
+      background-color: rgb(254, 255, 255);
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+      border-radius:5px;
+    }
+    .contant{
+      background-color: rgb(254, 255, 255);
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+      border-radius:5px;
+    }
+
+    .contant>img{
+     width:100%;
+     border-radius:5px;
+    }
+
+    h4{
+     margin-bottom:-12px;
+     margin-top:-2px;
+    }
+   
+   h5+div{
+      background-color: rgb(250, 250, 250);
+      height:25px;
+      margin-top: -15px;
+      width:85px;
+      margin-left:30%;
+      background-size: cover;
+      background-position: center;
+    }
+
+  }
+
+  @media screen and (min-width:320px) and (max-width: 777px) {
+    
+
+    #container{
+       display: grid;
+       grid-template-columns: repeat(2,1fr);
+       /* grid-template-rows: 250px 250px 250px; */
+       background-color: blanchedalmond;
+       justify-content: center;
+       text-align: center;
+       padding:15px;
+       gap:25px;
+    }
+
+    .contant{
+      background-color: rgb(254, 255, 255);
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+      border-radius:5px;
+    }
+    .contant{
+      background-color: rgb(254, 255, 255);
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+      border-radius:5px;
+    }
+
+    .contant>img{
+     width:100%;
+     border-radius:5px;
+    }
+
+    h4{
+     margin-bottom:-12px;
+     margin-top:-2px;
+    }
+   
+   h5+div{
+      background-color: rgb(250, 250, 250);
+      height:25px;
+      margin-top: -15px;
+      width:65px;
+      margin-left:40%;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+  .contant:hover{
+ 
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  }
+   
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="contant"> 
+     <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Vijay_Shekhar_Sharma_Paytm_96f52579b8.jpg">
+     <h4>Vijay Shekhar Sharma</h4>
+     <h5>Founder & CEO</h5>
+     <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/paytm_rect_06df45a24f.svg);"></div>
+    </div>
+
+    <div class="contant"> 
+     <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Rectangle_427_637d69bb57.png">
+     <h4>Kunal Shah</h4>
+     <h5>Founder </h5>
+     <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/cred_0a47d7b4f8.png);"></div>
+    </div>
+    
+    <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/amrish_rau_pine_labs_144e5e587c.jpg">
+      <h4>Amrish Rau</h4>
+      <h5>CEO</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/pine_labs_0aa2407434.png);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Sampad_swain_Instamojo_f12bf6341e.jpg">
+      <h4>Sampad Swain</h4>
+      <h5>Co-Founder & CEO</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/instamojo_8763e704f7.png);"></div>
+     </div>
+   
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Ankush_Sachdeva_Sharechat_4e44dbbe6b.jpg">
+      <h4>Ankush Sachdeva</h4>
+      <h5>Co-Founder & CEO</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/sharechat_rect_73d95cd4e1.svg);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/saurbh_garg_nobroker_c0c71cc431.jpeg">
+      <h4>Saurabh Garg</h4>
+      <h5>Founder & CBO</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/nobroker_rect_28c9778c30.svg);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Vipin_Pathak_Care24_acd02cd173.jpg">
+      <h4>Vipin Pathak</h4>
+      <h5>Co-Founder & CEO</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/care24_1164f7a2cd.png);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Ramakant_Sharma_livespace_0308e3627d.jpg">
+      <h4>Ramakant Sharma</h4>
+      <h5>Founder</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/livspace_f9318b2e8d.png);"></div>
+     </div>
+   
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Mohit_Tandon_Delhivery_b43fee16c4.jpg">
+      <h4>Mohit Tandon</h4>
+      <h5>Co-Founder</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/delhivery_17e85a76ed.png);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Abhishek_Goyal_tracxn_5b2f61d87d.jpg">
+      <h4>Ahishek Goyal</h4>
+      <h5>Founder</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/tracxn_6d0c3de2ee.svg);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Anurag_Jain_Kredx_b6ed6a31c6.jpg">
+      <h4>Anurag Jain</h4>
+      <h5>Founder & Executive Director</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/kredx_rect_204437078a.svg);"></div>
+     </div>
+    
+     <div class="contant"> 
+      <img src="https://masai-website-images.s3.ap-south-1.amazonaws.com/Harshvardhan_Lunia_Lendingkart_44d72a6fcd.jpg">
+      <h4>Hashvardhan Lunia</h4>
+      <h5>Co-Founder & CEO</h5>
+      <div style="background-image: url(https://masai-website-images.s3.ap-south-1.amazonaws.com/lendingkart_rect_d0d30d7b53.svg);"></div>
+     </div>
+  </div>
+</body>
+</html>
