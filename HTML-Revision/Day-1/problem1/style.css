@@ -1,0 +1,18 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+article:nth-of-type(even){
+    background-color: red;
+}
+article p:last-of-type{
+    background-color: blue;
+}
+article section > :first-child{
+    font-weight: bold;
+}
+footer a{
+    color: teal;
+    text-decoration: dashed;
+}
