@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* color: aliceblue; */
+    font-family: sans-serif;
+}
+
+nav > #navbar{
+    /* background-color: rgb(208, 12, 12); */
+    justify-content: space-between;
+    padding: 20px;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    margin: auto;
+    color: black;
+}
+#navbar > div:nth-of-type(1){
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+#navbar > div:nth-of-type(2){
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+#navbar > div:nth-of-type(2) > div{
+    border-radius: 10px;
+    border: 1px solid;
+    padding: 5px;
+    width: 250px;
+    background-color: white;
+}
+#navbar > div:nth-of-type(2) > div>input{
+    border: none;
+}
+#reward{
+    background-color: rgb(28, 57, 48);
+    width: 100%;
+    height: 10%;
+    padding: 30px 100px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+#reward > button{
+    border-color: white;
+    border-radius: 15px;
+    color: white;
+    background-color:rgb(28, 57, 48);
+    padding: 5px 10px;
+}
+
+#all-new > div>img{
+width: 100px;
+}
+#all-new > div{
+    background-color: rgb(245, 233, 150);
+    display: flex;
+    width: 85%;
+    /* border: 1px solid; */
+    margin: auto;
+    margin-top: 5rem;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 40px;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+#all-new > div>div>h2>i{
+    color: goldenrod
+}
+#all-new > div > button{
+    padding: 15px 35px;
+    border-radius: 20px;
+    background-color: rgb(4, 116, 73);
+    align-self: self-end;
+    color: white;
+    border: none;
+}
+#handcraft{
+    width: 85%;
+    margin: auto;
+    margin-top: 5rem;
+    /* border: 1px solid; */
+}
+#handcraft > div{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+#handcraft > .cards>div>div>img{
+    width: 100px;
+    border-radius: 50%;
+}
+section#barista{
+    background-color: rgb(237, 234, 233);
+    /* height: 350px; */
+    /* border: 1px solid; */
+    margin-top: 5rem;
+    padding: 30px ;
+}
+#barista>div.name{
+    padding: 10px;
+    margin: auto;
+    width: 85%;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+#barista>div.name>p{
+    color: rgb(4, 116, 73);
+}
+#barista>div.card{
+    width: 30%;
+    /* border:1px solid; */
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 70px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+#barista>div.card>div:nth-of-type(1){
+    display: flex;
+    padding: 7px 10px;
+    gap: 20px;
+}
+
+#barista>div.card>div:nth-of-type(1)>div.image>img{
+    width: 80px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+#barista>div.card>div:nth-of-type(2){
+    display: flex;
+    padding: 0px 30px;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+#barista>div.card>div:nth-of-type(2)>button{
+    background-color: rgb(4, 116, 73);
+    border-radius: 20px;
+    padding: 8px 20px;
+    border: none;
+    color: white;
+}
