@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="colorinp" placeholder="color-name">
+    <button id="colorbtn">Change Background</button>
+    <br>
+    <br>
+    <input type="text" id="textcon" placeholder="text-content">
+    <button id="contentbtn">Update Text</button>
+
+    <div style="width: 200px; height: 200px; border: 1px solid; margin: 10px;">
+
+    </div>
+
+    <script>
+        let colorbtn = document.getElementById('colorbtn');
+        let contentbtn = document.getElementById('contentbtn');
+        let divbox = document.querySelector('div');
+
+        colorbtn.addEventListener('click',()=>{
+            let colorval = document.querySelector('#colorinp').value;
+             if(colorval==""){
+                alert(`Invalid Color`)
+             }else{
+                divbox.style.backgroundColor=colorval;
+             }
+        });
+
+        contentbtn.addEventListener('click',()=>{
+            let text = document.getElementById('textcon')
+            if(text.value == ""){
+                alert("Please enter some text!")
+            }else{
+                divbox.textContent=text.value;
+            }
+        })
+        
+    </script>
+</body>
+</html>
