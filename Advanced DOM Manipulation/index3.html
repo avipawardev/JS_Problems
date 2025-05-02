@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #parent{
+            width: 50%;
+            height: 50vh;
+            border: 1px solid;
+            background-color: royalblue;
+        }
+        #child{
+            width: 50%;
+            height: 50%;
+            border: 1px solid;
+            background-color: salmon;
+        }#grandchild{
+            width: 50%;
+            height: 50%;
+            border: 1px solid;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <!-- <button id="pbtn">Parent</button> -->
+         <h1>Parent</h1>
+        <div id="child">
+            <div id="grandchild">
+                <!-- <button id="gcbtn">GrandChild</button> -->
+                 <h2>GrandChild</h2>
+            </div>
+            <!-- <button id="cbtn">Child</button> -->
+             <h3>Child</h3>
+        </div>
+    </div>
+
+    <script>
+        let parent = document.getElementById('parent');
+        let child = document.getElementById('child');
+        let grandchild = document.getElementById('grandchild');
+
+        parent.addEventListener('click',(event)=>{
+            alert('Parent Clicked!')
+        })
+
+        child.addEventListener('click',(event)=>{
+            event.stopPropagation()
+            //this stopPropagation stop the bubbling from this child to it's parent.
+            alert('Child Clicked!')
+        })
+
+        grandchild.addEventListener('click',(event)=>{
+            event.stopPropagation()
+            //this stopPropagation stop the bubbling from this child to it's parent.
+            alert('GrandChild Clicked!')
+        })
+    </script>
+</body>
+</html>
