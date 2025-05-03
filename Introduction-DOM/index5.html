@@ -51,15 +51,25 @@
 
             let newTask = document.createElement('li');
             newTask.innerHTML = inpvalue;
+//Complete task Feature
+            let complete = document.createElement("button");
+            complete.textContent='completed';
+            complete.addEventListener("click",()=>{
+                complete.style.textDecoration='line-through';
+            })
+//Delete Feature
+            let deletebtn = document.createElement('button');
+            deletebtn.textContent='Delete';
+            deletebtn.addEventListener('click',()=>{
+                newTask.remove();
+            })
+
+            newTask.appendChild(complete);
+            newTask.appendChild(deletebtn);
 
             taskList.appendChild(newTask);
             taskInput.value="";
         });
-        taskList.addEventListener('click',(e)=>{
-            if(e.target.tagName == "LI"){
-                e.target.remove()
-            }
-        })
     </script>
 </body>
 </html>
