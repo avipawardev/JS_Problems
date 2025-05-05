@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+#navbar > div{
+    display: flex;
+    justify-content: space-evenly;
+    /* border: 1px solid; */
+    padding: 1rem;
+    min-width: 400px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+#navbar > div > a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 2rem;
+}
+#list-destinations{
+    padding: 2rem;
+    width: 100%;
+    /* height: 50vh; */
+    /* background-color: salmon; */
+    display: flex;
+    justify-content: space-around;
+    font-size: 3rem;
+    background-color: lightblue;
+}
+#places{
+display: grid;
+grid-template-columns: repeat(4,1fr);
+/* border: 1px solid; */
+padding: 2rem;
+gap: 2rem;
+}
+#places>div{
+    /* border: 1px solid; */
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    text-align: center;
+}
+img{
+    width: 100%;
+}
+footer>#footer-container{
+    height: 10rem;
+    background-color: grey;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

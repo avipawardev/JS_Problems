@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+#navbar > div{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    min-width: 400px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+#navbar > div > a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 2rem;
+}
+section>#main-section{
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 95vw;
+    height: 90vh;
+    margin: auto;
+    /* background: url('https://www.youtube.com/watch?v=BQ9n5Y_LzQ8&pp=ygUgZmF2b3JpdGUgZGVzdGluYXRpb24gbmF0dXJlIHZpZXc%3D'); */
+    background: url('https://t3.ftcdn.net/jpg/02/70/35/00/360_F_270350073_WO6yQAdptEnAhYKM5GuA9035wbRnVJSr.jpg');
+    background: no-repeat();
+    background-size: cover;
+}
+section>#main-section>h1{
+    font-size: 4.5rem;
+}
+section>#main-section>a{
+    text-decoration: none;
+    font-size: 2.5rem;
+    color: lightgreen;
+}
+section>#main-section>p{
+    font-size: 2rem;
+    color: white;
+}
+.locations{
+    width: 100%;
+    height: 40%;
+    margin: 2rem;
+    /* border: 1px solid; */
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2rem;
+}
+.locations > div > iframe{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2rem;
+}
+footer>#footer-container{
+    height: 10rem;
+    background-color: grey;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
