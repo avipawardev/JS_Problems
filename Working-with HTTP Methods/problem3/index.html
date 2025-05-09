@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #form-cont{
+            margin: auto;
+            width: 300px;
+            border: 0.1px solid;
+            padding: 10px;
+           text-align: center;
+           border-radius: 10px;
+           background-color: rgb(237, 233, 233);
+        }
+        #form-cont input,button{
+            padding: 10px;
+            width: 250px;
+            margin: 10px;
+        }
+        button{
+            background-color: royalblue;
+            border: none;
+            border-radius: 10px;
+        }
+        #users{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        #users div{
+            border: 1px solid;
+            width: 300px;
+            font-size: 20px;
+        }
+        img{
+            width: 40%;
+            border-radius: 50%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="form-cont">
+        <form action="" id="registerform">
+            <input id="nameinput" type="text" placeholder="username">
+            <input id="emailinput" type="email" placeholder="email">
+            <button>Submit</button>
+        </form>
+    </div>
+    <div id="users"></div>
+</body>
+</html>
+<script>
+let registerform = document.getElementById('registerform')
+registerform.addEventListener('submit',async function(e){
+    e.preventDefault()
+    let name = document.getElementById('nameinput').value;
+    let email = document.getElementById('emailinput').value;
+    let container = document.getElementById('users');
+
+    if(!name || !email){
+        alert('Fields Must be Filled');
+        return;
+    }
+
+    container.innerHTML="";
+
+    let response = await fetch('https://681d832bf74de1d219b00089.mockapi.io/users');
+    let data = await response.json();
+
+    console.log(data.name)
+
+    data.forEach(element => {
+        let card = document.createElement('div')
+    card.innerHTML=`
+        <img src="${element.avatar}" alt="">
+        <h2>${element.name}</h2>
+        <h3>${element.email}</h3>
+    `
+    container.appendChild(card);
+    });
+
+
+    await fetch(`https://681d832bf74de1d219b00089.mockapi.io/users`,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({name,email})
+    });
+    
+})
+</script>

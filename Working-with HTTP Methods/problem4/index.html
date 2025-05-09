@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Registration</title>
+  <style>
+    #form-cont {
+      margin: auto;
+      width: 300px;
+      border: 0.1px solid;
+      padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+      background-color: rgb(237, 233, 233);
+    }
+
+    #form-cont input, button {
+      padding: 10px;
+      width: 250px;
+      margin: 10px;
+    }
+
+    button {
+      background-color: royalblue;
+      border: none;
+      border-radius: 10px;
+      color: white;
+    }
+
+    #users {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px;
+    }
+
+    #users div {
+      border: 1px solid;
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    img {
+      width: 40%;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="form-cont">
+    <form id="registerform">
+      <input id="nameinput" type="text" placeholder="Username" required />
+      <input id="emailinput" type="email" placeholder="Email" required />
+      <input id="passwordinput" type="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <div id="users"></div>
+
+  <script>
+    const apiURL = 'https://681d832bf74de1d219b00089.mockapi.io/users';
+    const form = document.getElementById('registerform');
+    const usersContainer = document.getElementById('users');
+
+    async function displayUsers() {
+      usersContainer.innerHTML = "";
+      const res = await fetch(apiURL);
+      const users = await res.json();
+
+      users.forEach(user => {
+        const card = document.createElement('div');
+        card.innerHTML = `
+          <img src="${user.avatar}" alt="user avatar" />
+          <h2>${user.name}</h2>
+          <h3>${user.email}</h3>
+          <button onclick="editUser('${user.id}')">Edit</button>
+        `;
+        usersContainer.appendChild(card);
+      });
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('nameinput').value;
+      const email = document.getElementById('emailinput').value;
+      const password = document.getElementById('passwordinput').value;
+
+      if (!name || !email || !password) {
+        alert("All fields are required!");
+        return;
+      }
+
+      await fetch(apiURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      
+      form.reset();
+      displayUsers();
+    });
+
+    
+    async function updateUserFull(id) {
+      await fetch(`${apiURL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: "Updated Name", email: "updated@email.com", password: "updatedpass" })
+      });
+      displayUsers();
+    }
+
+    async function editUser(id) {
+      await fetch(`${apiURL}/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: "Patched Name" })
+      });
+      displayUsers();
+    }
+
+
+    displayUsers();
+  </script>
+</body>
+</html>

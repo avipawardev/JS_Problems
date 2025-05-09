@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+        <select name="" id="categories">
+            <option value="Clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Books">Books</option>
+        </select>
+        <input type="text" placeholder="Min Price" id="minPrice">
+        <input type="text" placeholder="Max Price" id="maxPrice">
+        <button onclick="fetchData()">Search</button>
+        <div id="container">
+
+        </div>
+        
+</body>
+</html>
+<script>
+
+async function fetchData() {
+    let container = document.getElementById('container');
+    let categories = document.getElementById('categories');
+    let cat = categories.value;
+    let minPrice = +document.getElementById('minPrice').value;
+    let maxPrice = +document.getElementById('maxPrice').value;
+
+    let url = `https://681d832bf74de1d219b00089.mockapi.io/EcommerceProducts`;
+
+    try {
+        let res = await fetch(url);
+        let data = await res.json();
+
+        // filter by category
+        data = data.filter(item => item.category === cat);
+
+        // Filter by price range
+        if (minPrice) {
+            data = data.filter(item => +item.price >= minPrice);
+        }
+        if (maxPrice) {
+            data = data.filter(item => +item.price <= maxPrice);
+        }
+
+        // sort ascending by price
+        data.sort((a, b) => +a.price - +b.price);
+
+        container.innerHTML = "";
+
+        data.forEach(element => {
+            let card = document.createElement('div');
+            card.className = 'card-div';
+            card.innerHTML = `
+                <h2>${element.name}</h2>
+                <p>${element.description}</p>
+                <p>Price: ₹${element.price}</p>
+                <p>Category: ${element.category}</p>
+            `;
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        container.innerHTML = "<p>Failed to fetch products. Please try again.</p>";
+        console.error("Fetch error:", error);
+    }
+}
+
+
+    
+
+</script>
+
+<!-- category
+: 
+"Gaming"
+description
+: 
+"High-precision RGB gaming mouse with customizable buttons."
+id
+: 
+3
+image
+: 
+"https://example.com/images/mouse.jpg"
+name
+: 
+"Gaming Mouse"
+price
+: 
+1799
+rating
+: 
+4.7 -->

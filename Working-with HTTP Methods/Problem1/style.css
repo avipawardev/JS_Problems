@@ -1,0 +1,26 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    text-align: center;
+    margin: 10px;
+}
+#container div{
+    border: 1px solid;
+    width: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    height: 200px;
+}
+button{
+    color: white;
+    background-color: royalblue;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}

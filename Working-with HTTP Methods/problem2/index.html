@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form action="" id="registration-form">
+        <input id="nameinput" type="text" placeholder="enter name">
+        <input id="emailinput" type="email" placeholder="enter email">
+        <input id="passwordinput" type="password" placeholder="password">
+        <button>SignIn</button>
+    </form>
+    <div id="statusDiv">
+
+    </div>
+</body>
+</html>
+<script>
+    let regForm = document.getElementById('registration-form');
+    regForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+
+        let name = document.getElementById('nameinput').value;
+        let email = document.getElementById('emailinput').value;
+        let password = document.getElementById('passwordinput').value;
+        let statusDiv = document.getElementById('statusDiv');
+
+        if(!name || !email || !password){
+            statusDiv.textContent='All fields are required!'
+            statusDiv.style.color='red'
+            return;
+        }
+        let response = await fetch('https://681d832bf74de1d219b00089.mockapi.io/users',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({name,email,password})
+        })
+
+        if(response){
+            statusDiv.textContent="Registration Succussfully!"
+            statusDiv.style.color='green';
+            regForm.reset();
+        }
+    })
+</script>
