@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <style>
+    #Box1 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 10px;
+      text-align: center;
+      background-color: rgb(167, 222, 248);
+    }
+  </style>
+</head>
+<body>
+  <div id="Box1"></div>
+</body>
+</html>
+
+<script>
+const products = [
+  { id: 1, name: "Product A", price: 50, inStock: true },
+  { id: 2, name: "Product B", price: 30, inStock: false },
+  { id: 3, name: "Product C", price: 70, inStock: true },
+  { id: 4, name: "Product D", price: 20, inStock: true },
+  { id: 5, name: "Product E", price: 50, inStock: true },
+  { id: 6, name: "Product F", price: 30, inStock: false },
+  { id: 7, name: "Product G", price: 70, inStock: true },
+  { id: 8, name: "Product H", price: 20, inStock: false }
+];
+
+products.forEach((ele) => {
+  let Box1 = document.getElementById("Box1");
+
+  let Box = document.createElement("div");
+  Box.style.border = "2px solid";
+  Box.style.padding = "10px";
+  Box.style.margin = "10px";
+  Box.style.borderRadius = "12px"
+  Box.style.backgroundColor="white"
+
+  let id = document.createElement("h1");
+  id.textContent = ele.id;
+
+  let name = document.createElement("h2");
+  name.textContent = ele.name;
+
+  let price = document.createElement("h2");
+  price.textContent = "Price: $" + ele.price;
+
+  let inStock = document.createElement("h3");
+  inStock.textContent = ele.inStock ? "In Stock" : "Out of Stock";
+  if(ele.inStock == true){
+     inStock.style.backgroundColor = "green";
+  }
+  else{
+     inStock.style.backgroundColor = "rgb(249, 137, 137)";
+
+  }
+
+  Box.append(id, name, price, inStock);
+  Box1.appendChild(Box);
+});
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box"></div>
+    <button id="Add-Para">Add</button>
+    <button id="Remove-Para">Remove</button>
+</body>
+</html>
+<script>
+let box = document.getElementById("box");
+let Add = document.getElementById("Add-Para");
+let Remove = document.getElementById("Remove-Para");
+
+Add.addEventListener("click",function(){
+    let p = document.createElement("p");
+    p.innerText = "This is a Paragraph";
+    box.appendChild(p)
+})
+
+Remove.addEventListener("click",function(){
+    box.removeChild(box.lastChild)
+})
+
+</script>

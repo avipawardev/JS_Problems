@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+ body{
+    text-align: center;
+ }   
+#box{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+#box>div{
+    padding: 12px 10%;
+}
+#box2{
+    border: 1px solid;
+    width: 40%;
+    margin: auto;
+    background-color: antiquewhite;
+}
+</style>
+<body>
+     <div id="box">
+       <div>
+         <input id="task" type="text" placeholder="Enter Task">
+        <button id="addTaskBtn" >Add Task</button>
+       </div>
+        <div>
+            <button id="AllBtn">All Tasks</button>
+            <button id="CompletedBtn">Completed Tasks</button>
+            <button id="IncompleteBtn">Incomplete Tasks</button>
+        </div>
+     </div>
+     <div id="box2">
+        <h2>Tasks</h2>
+       
+     </div>
+</body>
+</html>
+
+<script>
+    let box = document.getElementById("box");
+    let task = document.getElementById("task");
+    let addTaskBtn = document.getElementById("addTaskBtn");
+    let AllBtn = document.getElementById("AllBtn");
+    let CompletedBtn = document.getElementById("CompletedBtn");
+    let IncompleteBtn = document.getElementById("IncompleteBtn");
+    let box2 = document.getElementById("box2")
+
+
+    addTaskBtn.addEventListener("click",function(){
+      let p = document.createElement("p");
+      let checkBox = document.createElement("button")
+      p.innerText = task.value
+      box2.appendChild(p,checkBox)
+
+      task.value = ""
+    })
+
+</script>
