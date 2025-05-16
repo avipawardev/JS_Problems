@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Show List on Button Click</title>
+</head>
+<body>
+  <button id="button">Show List</button>
+
+  <ul id="ul" style="display: none;">
+    <li>List1</li>
+    <li>List2</li>
+    <li>List3</li>
+  </ul>
+
+  <script>
+    let button = document.getElementById("button");
+    let ul = document.getElementById("ul");
+
+    button.addEventListener("click", () => {
+      ul.style.display = "block"; // show the list
+    });
+  </script>
+</body>
+</html>

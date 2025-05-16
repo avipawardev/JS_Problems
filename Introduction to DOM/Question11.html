@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div{
+        background-color: red;
+    }
+</style>
+<body>
+    <div class="container"></div>
+    <h1 id="h1">Hello World!</h1>
+    <p>Para1</p>
+    <p>Para2</p>
+    <p>Para3</p>
+    <p>Para4</p>
+</body>
+</html>
+<script>
+let h1 = document.getElementById("h1");
+h1.innerText = "My World!"
+
+let p = document.getElementsByTagName("p");
+for (let i = 0; i < p.length; i++) {
+  p[i].style.color = "red";
+}
+
+let div = document.querySelector("div");
+div.style.width = "100px";
+div.style.height = "100px";
+div.style.border = "2px solid"
+div.style.backgroundColor = "yellow"
+</script>

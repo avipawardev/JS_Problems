@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="p"></p>
+    <input id="text" type="text">
+    <button id="btnText">Text</button>
+    <br>
+    <input id="color" type="text">
+    <button id="btnColor">Change Color</button>
+</body>
+</html>
+
+<script>
+    let p = document.getElementById("p")
+  let inputColor = document.getElementById("color");
+  let btnColor = document.getElementById("btnColor");
+  let inputText = document.getElementById("text");
+  let btnText = document.getElementById("btnText");
+
+btnText.addEventListener("click", function(){
+    p.textContent = inputText.value;
+    p.style.fontFamily = "cursive"
+})
+
+btnColor.addEventListener("click",function(){
+    p.style.backgroundColor =  inputColor.value
+    p.style.color = "white";
+    p.style.width = "100px"
+})
+
+
+</script>
