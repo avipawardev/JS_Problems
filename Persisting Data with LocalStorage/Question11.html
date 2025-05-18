@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Notes App</title>
+</head>
+<body>
+
+  <h2>My Notes</h2>
+  <textarea id="notes" rows="10" cols="40" placeholder="Write something..."></textarea><br><br>
+
+  <button id="save">Save</button>
+  <button id="load">Load</button>
+  <button id="clear">Clear</button>
+
+  <script>
+    const textarea = document.getElementById("notes");
+    const saveBtn = document.getElementById("save");
+    const loadBtn = document.getElementById("load");
+    const clearBtn = document.getElementById("clear");
+
+    // Save notes
+    saveBtn.addEventListener("click", function () {
+      const note = textarea.value.trim();
+      if (note === "") {
+        alert("Please write something before saving.");
+        return;
+      }
+      localStorage.setItem("note", note);
+      alert("Note saved!");
+    });
+
+    // Load notes
+    loadBtn.addEventListener("click", function () {
+      const savedNote = localStorage.getItem("note");
+      if (savedNote) {
+        textarea.value = savedNote;
+      } else {
+        alert("No saved note found.");
+      }
+    });
+
+    // Clear notes
+    clearBtn.addEventListener("click", function () {
+      localStorage.removeItem("note");
+      textarea.value = "";
+      alert("Note cleared!");
+    });
+
+    // Load on page refresh
+    window.addEventListener("load", function () {
+      const savedNote = localStorage.getItem("note");
+      if (savedNote) {
+        textarea.value = savedNote;
+      }
+    });
+  </script>
+
+</body>
+</html>

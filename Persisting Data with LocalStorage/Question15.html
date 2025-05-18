@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Login</h2>
+  <input id="user" placeholder="Username">
+  <button id="login">Login</button>
+
+  <div id="app" style="display:none;">
+    <h3 id="welcome"></h3>
+    <input id="item" placeholder="Item">
+    <input id="price" placeholder="Price" type="number">
+    <input id="qty" placeholder="Qty" type="number">
+    <button id="add">Add</button>
+
+    <ul id="list"></ul>
+    <h3 id="total">Total: ₹0</h3>
+  </div>
+
+  <script>
+    let user, cart = {};
+    const userInput = document.getElementById('user');
+    const loginBtn = document.getElementById('login');
+    const app = document.getElementById('app');
+    const welcome = document.getElementById('welcome');
+    const itemInput = document.getElementById('item');
+    const priceInput = document.getElementById('price');
+    const qtyInput = document.getElementById('qty');
+    const addBtn = document.getElementById('add');
+    const list = document.getElementById('list');
+    const totalDisplay = document.getElementById('total');
+
+    loginBtn.addEventListener('click', () => {
+      user = userInput.value.trim();
+      if (!user) return alert('Enter username');
+      cart = JSON.parse(localStorage.getItem('cartData') || '{}');
+      if (!cart[user]) cart[user] = [];
+      welcome.textContent = `Welcome, ${user}`;
+      app.style.display = 'block';
+      userInput.value = '';
+      render();
+    });
+
+    addBtn.addEventListener('click', () => {
+      const name = itemInput.value.trim();
+      const price = parseFloat(priceInput.value);
+      const qty = parseInt(qtyInput.value);
+      if (!name || !price || !qty || price <= 0 || qty <= 0) return alert('Enter valid details');
+      cart[user].push({ name, price, qty });
+      saveAndRender();
+      itemInput.value = priceInput.value = qtyInput.value = '';
+    });
+
+    function render() {
+      list.innerHTML = '';
+      let total = 0;
+      cart[user].forEach((item, i) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} ₹${item.price} x${item.qty} = ₹${item.price * item.qty}`;
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.addEventListener('click', () => {
+          cart[user].splice(i, 1);
+          saveAndRender();
+        });
+        li.appendChild(del);
+        list.appendChild(li);
+        total += item.price * item.qty;
+      });
+      totalDisplay.textContent = `Total: ₹${total}`;
+    }
+
+    function saveAndRender() {
+      localStorage.setItem('cartData', JSON.stringify(cart));
+      render();
+    }
+  </script>
+</body>
+</html>

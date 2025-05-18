@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Persistent List</title>
+</head>
+<body>
+  <h2>My List</h2>
+  <input id="itemInput" placeholder="Add new item" />
+  <button id="addBtn">Add</button>
+
+  <ul id="itemList"></ul>
+
+  <script>
+    const input = document.getElementById('itemInput');
+    const addBtn = document.getElementById('addBtn');
+    const itemList = document.getElementById('itemList');
+
+    // Load list from localStorage or start empty
+    let items = JSON.parse(localStorage.getItem('myItems')) || [];
+
+    // Function to render list on page
+    function render() {
+      itemList.innerHTML = '';
+      items.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        itemList.appendChild(li);
+      });
+    }
+
+    // Save list to localStorage
+    function save() {
+      localStorage.setItem('myItems', JSON.stringify(items));
+    }
+
+    // Add button click event
+    addBtn.addEventListener('click', () => {
+      const newItem = input.value.trim();
+      if (newItem) {
+        items.push(newItem);
+        save();
+        render();
+        input.value = ''; // clear input
+      } else {
+        alert('Please enter an item');
+      }
+    });
+
+    // Render initial list on page load
+    render();
+  </script>
+</body>
+</html>
