@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Search & Filter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #controls {
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Products Search & Filter</h1>
+
+  <div id="controls">
+    <input type="text" id="search" placeholder="Search by title" />
+    <select id="categoryFilter">
+      <option value="all">All Categories</option>
+    </select>
+    <select id="sortPrice">
+      <option value="">Sort by Price</option>
+      <option value="asc">Low to High</option>
+      <option value="desc">High to Low</option>
+    </select>
+  </div>
+
+  <div id="productGrid" class="grid"></div>
+
+  <script>
+    const productGrid = document.getElementById('productGrid');
+    const searchInput = document.getElementById('search');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const sortPrice = document.getElementById('sortPrice');
+
+    let allProducts = [];
+
+    async function fetchProducts() {
+      const res = await fetch('https://fakestoreapi.com/products');
+      const data = await res.json();
+      allProducts = data;
+      displayProducts(data);
+    }
+
+    async function fetchCategories() {
+      const res = await fetch('https://fakestoreapi.com/products/categories');
+      const categories = await res.json();
+      categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        categoryFilter.appendChild(option);
+      });
+    }
+
+    function displayProducts(products) {
+      productGrid.innerHTML = '';
+      products.forEach(prod => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${prod.image}" alt="${prod.title}">
+          <h3>${prod.title}</h3>
+          <p>₹${prod.price}</p>
+        `;
+        productGrid.appendChild(card);
+      });
+    }
+
+    function filterAndSortProducts() {
+      let filtered = [...allProducts];
+
+      // Search
+      const searchText = searchInput.value.toLowerCase();
+      filtered = filtered.filter(p => p.title.toLowerCase().includes(searchText));
+
+      // Category
+      const selectedCategory = categoryFilter.value;
+      if (selectedCategory !== 'all') {
+        filtered = filtered.filter(p => p.category === selectedCategory);
+      }
+
+      // Sort
+      const sort = sortPrice.value;
+      if (sort === 'asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === 'desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+
+      displayProducts(filtered);
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', filterAndSortProducts);
+    categoryFilter.addEventListener('change', filterAndSortProducts);
+    sortPrice.addEventListener('change', filterAndSortProducts);
+
+    // Initial Load
+    fetchProducts();
+    fetchCategories();
+  </script>
+
+</body>
+</html>

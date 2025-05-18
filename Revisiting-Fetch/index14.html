@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #weather {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Weather Fetch App</h1>
+  <form id="weatherForm">
+    <input type="text" id="city" placeholder="Enter city name" required />
+    <button type="submit">Get Weather</button>
+  </form>
+
+  <div id="weather"></div>
+
+  <script>
+    const weatherForm = document.getElementById('weatherForm');
+    const cityInput = document.getElementById('city');
+    const weatherDisplay = document.getElementById('weather');
+
+    weatherForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const city = cityInput.value.trim();
+      if (city === '') {
+        weatherDisplay.textContent = 'Please enter a city name.';
+        return;
+      }
+      fetchWeather(city);
+    });
+
+    async function fetchWeather(city) {
+      const apiKey = 'YOUR_API_KEY'; // Replace with your real OpenWeather API key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error('City not found or something went wrong.');
+        }
+
+        const data = await response.json();
+        weatherDisplay.textContent = `Temperature in ${data.name}: ${data.main.temp}°C`;
+      } catch (error) {
+        weatherDisplay.textContent = `Error: ${error.message}`;
+      }
+    }
+  </script>
+
+</body>
+</html>
