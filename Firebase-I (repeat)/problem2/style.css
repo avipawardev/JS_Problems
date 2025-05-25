@@ -1,0 +1,19 @@
+body{
+    background-color: rgb(243, 243, 243);
+}
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px auto;
+    color: black;
+}
+#container div{
+    border: 1px solid;
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}

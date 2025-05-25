@@ -1,0 +1,35 @@
+{
+    "users": [
+      { "id": 1, "name": "Amit Verma", "age": 28, "city": "Mumbai", "occupation": "Software Engineer" },
+      { "id": 2, "name": "Priya Sharma", "age": 24, "city": "Delhi", "occupation": "Content Writer" },
+      { "id": 3, "name": "Rohan Mehta", "age": 30, "city": "Bangalore", "occupation": "Graphic Designer" },
+      { "id": 4, "name": "Neha Singh", "age": 27, "city": "Chennai", "occupation": "Marketing Executive" },
+      { "id": 5, "name": "Suresh Rao", "age": 32, "city": "Hyderabad", "occupation": "Sales Manager" },
+      { "id": 6, "name": "Anjali Patel", "age": 25, "city": "Ahmedabad", "occupation": "Teacher" },
+      { "id": 7, "name": "Vikram Joshi", "age": 29, "city": "Pune", "occupation": "Mechanical Engineer" },
+      { "id": 8, "name": "Kavita Mishra", "age": 31, "city": "Kolkata", "occupation": "HR Executive" },
+      { "id": 9, "name": "Raj Malhotra", "age": 26, "city": "Nagpur", "occupation": "Lawyer" },
+      { "id": 10, "name": "Sneha Desai", "age": 23, "city": "Jaipur", "occupation": "Journalist" },
+      { "id": 11, "name": "Rahul Khanna", "age": 34, "city": "Bhopal", "occupation": "Doctor" },
+      { "id": 12, "name": "Meena Iyer", "age": 28, "city": "Lucknow", "occupation": "Pharmacist" },
+      { "id": 13, "name": "Dev Mishra", "age": 30, "city": "Chandigarh", "occupation": "Architect" },
+      { "id": 14, "name": "Pooja Yadav", "age": 22, "city": "Patna", "occupation": "Fashion Designer" },
+      { "id": 15, "name": "Nikhil Jain", "age": 29, "city": "Surat", "occupation": "Financial Analyst" },
+      { "id": 16, "name": "Ritu Sinha", "age": 33, "city": "Kanpur", "occupation": "Lecturer" },
+      { "id": 17, "name": "Sanjay Kapoor", "age": 27, "city": "Indore", "occupation": "Civil Engineer" },
+      { "id": 18, "name": "Preeti Kaur", "age": 26, "city": "Amritsar", "occupation": "Interior Designer" },
+      { "id": 19, "name": "Arjun Deshmukh", "age": 35, "city": "Nashik", "occupation": "Entrepreneur" },
+      { "id": 20, "name": "Rina Das", "age": 31, "city": "Guwahati", "occupation": "Data Scientist" },
+      { "id": 21, "name": "Tarun Bhatia", "age": 28, "city": "Thane", "occupation": "IT Support" },
+      { "id": 22, "name": "Divya Nair", "age": 25, "city": "Coimbatore", "occupation": "Banker" },
+      { "id": 23, "name": "Mohit Chauhan", "age": 30, "city": "Vadodara", "occupation": "Event Planner" },
+      { "id": 24, "name": "Lakshmi Rao", "age": 29, "city": "Vijayawada", "occupation": "Artist" },
+      { "id": 25, "name": "Rakesh Shetty", "age": 34, "city": "Mangalore", "occupation": "Hotel Manager" },
+      { "id": 26, "name": "Jaya Bansal", "age": 27, "city": "Rajkot", "occupation": "Psychologist" },
+      { "id": 27, "name": "Sunny Paul", "age": 32, "city": "Noida", "occupation": "SEO Specialist" },
+      { "id": 28, "name": "Ankita Roy", "age": 26, "city": "Agra", "occupation": "Chemist" },
+      { "id": 29, "name": "Deepak Tiwari", "age": 31, "city": "Ranchi", "occupation": "Pilot" },
+      { "id": 30, "name": "Nisha Saxena", "age": 24, "city": "Gwalior", "occupation": "Dancer" }
+    ]
+  }
+  

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #formdiv{
+            text-align: center;
+            width: 20%;
+            height: 200px;
+            /* border: 1px solid; */
+            position: absolute;
+            top: 20%;
+            left: 40%;
+            background-color: grey;
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+        }
+        #submit-form{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            /* margin-top: 50px; */
+        }
+        input{
+            padding: 10px;
+        }
+        button{
+            border: none;
+            background-color: royalblue;
+            padding: 8px;
+            width: 60px;
+            margin: auto;
+            border-radius: 10px;
+        }
+        #container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        #container div{
+            border: 1px solid;
+            width: 250px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="formdiv">
+        <form id="submit-form" action="">
+            <input id="name" type="text" placeholder="Name">
+            <input id="city" type="text" placeholder="City">
+            <input id="occupation" type="text" placeholder="Occupation">
+            <button>Submit</button>
+        </form>
+    </div>
+    <div id="container">
+        
+    </div>
+
+    <script>
+        // let API = 'https://moviedatabase-fc904-default-rtdb.asia-southeast1.firebasedatabase.app/users.json'
+        let formdiv = document.getElementById('submit-form');
+        let container = document.getElementById('container')
+        let editdiv = document.getElementById('formdiv')
+        let currentUserId = null;
+        formdiv.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    let name = document.getElementById('name').value;
+    let city = document.getElementById('city').value;
+    let occupation = document.getElementById('occupation').value;
+
+    if (currentUserId) {
+        await fetch(`https://moviedatabase-fc904-default-rtdb.asia-southeast1.firebasedatabase.app/users/${currentUserId}.json`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({ name, city, occupation })
+        });
+        currentUserId = null;
+        editdiv.style.display = 'none';
+        displayData();
+    }
+});
+
+            function editData(userid) {
+                currentUserId = userid;
+                editdiv.style.display = 'block';
+            }
+
+        async function displayData() {
+            let res = await fetch('https://moviedatabase-fc904-default-rtdb.asia-southeast1.firebasedatabase.app/users.json')
+            let data = await res.json()
+            console.log(data)
+
+            let users = Object.entries(data).map(([id,user])=>{
+                return {id,...user}
+            });
+            container.innerHTML=""
+            users.forEach((ele)=>{
+            
+                let card = document.createElement('div');
+                card.innerHTML=`
+                <h2>${ele.name}</h2>
+                <p>${ele.city}</p>
+                <p>${ele.occupation}</p>
+                <button onclick="editData('${ele.id}')">Edit</button>
+                `
+                container.appendChild(card)
+            })
+        }
+        displayData()
+    </script>
+</body>
+</html>
