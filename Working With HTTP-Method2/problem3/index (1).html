@@ -7,16 +7,16 @@
 </head>
 <style>
     #box{
+        /* border: 2px solid; */
         margin-top: 40px;
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
         gap: 12px;
     }
     #box>div{
         border: 2px solid gainsboro;
         padding: 12px;
         border-radius: 12px;
-        width: 250px;
     }
 
 </style>
@@ -50,51 +50,13 @@ let card = document.createElement("div");
 card.innerHTML = `
     <h2>Name : ${ele.name}</h2>
     <h2>Email : ${ele.email}</h2>
-    <button onclick="editUser('${ele.id}')">Edit Email</button>
-    <button onclick="deleteUser(${ele.id})">Delete</button>
 `
 box.appendChild(card);
 
 })
 }
+
 displayData()
-
-async function editUser(userId){
-    let newName = prompt("Enter Name here");
-    if(!newName) return;
-
-    try {
-        let res = await fetch(`${url}/${userId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email: newName })
-        });
-
-        if(res.ok){
-            // alert("User updated successfully!");
-            displayData();
-        } else {
-            alert("Failed to update user");
-        }
-    } catch (error) {
-        console.error("Error updating user:", error);
-        alert("Something went wrong!");
-    }
-}
-
-async function deleteUser(userId){
-    let res = await fetch(`${url}/${userId}`,{
-        method:"DELETE"
-    })
-    if(res){
-        // alert('User Deleted successfully')
-        displayData()
-    }else{
-        alert('Failled to Delete User')
-    }
-}
 
 async function postData(){
     let name = document.getElementById("name").value
