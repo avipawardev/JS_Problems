@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #container{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    #container>div{
+        border: 1px solid;
+        width: 300px;
+        /* height: 150px; */
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <select name="" id="select">
+        <option value="Electronics">Electronics</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Books">Books</option>
+    </select>
+    <input type="text" placeholder="MinimumPrice" id="min">
+    <input type="text" placeholder="MaximumPrice" id="max">
+
+    <button id="search">Search</button>
+
+    <div id="container">
+
+    </div>
+
+    <script>
+        let search = document.getElementById('search');
+        let select = document.getElementById('select');
+        let api = 'https://681d832bf74de1d219b00089.mockapi.io/EcommerceProducts'
+        search.addEventListener('click',async function (){
+            let arr = []
+            let min = document.getElementById('min').value;
+            let max = document.getElementById('max').value;
+            let container = document.getElementById('container');
+            
+            let res = await fetch(`${api}?category=${select.value}`);
+            let data = await res.json()
+            
+            if(min){
+                arr = data.filter((ele)=> ele.price>=min && ele.price<=max)
+                arr.sort((a,b)=>a.price - b.price);
+            }else{
+                arr = data;
+            }
+   
+            container.innerHTML = "";
+            arr.forEach((ele)=>{
+                let card = document.createElement('div');
+                card.innerHTML=`
+                <h2>${ele.name}</h2>
+                <p>Description: ${ele.description}</p>
+                <h3>Price: ${ele.price}</h3>
+                <p>Category: ${ele.category}</p>
+                `
+                container.appendChild(card)
+            })
+
+        })
+    </script>
+</body>
+</html>

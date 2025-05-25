@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="form" action="">
+        <input id="name" type="text" placeholder="Enter name">
+        <input id="email" type="email" placeholder="Enter email">
+        <input id="pass" type="password" placeholder="Enter password">
+        <button>Submit</button>
+    </form>
+    <div id="status">
+
+    </div>
+
+    <script>
+        let form = document.getElementById("form")
+        form.addEventListener('submit',async function(e){
+            e.preventDefault();
+            let status = document.getElementById('status')
+            let name = document.getElementById("name").value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('pass').value;
+
+            if(!name || !email || !password){
+                status.textContent='Please fill All Fields!'
+                status.style.color='red'
+                return;
+            }
+
+            let res = fetch('https://681d832bf74de1d219b00089.mockapi.io/users',{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({name,email,password})
+            })
+
+            if(res){
+                status.textContent='User Registration Successfully!';
+                status.style.color='green'
+            }
+
+        })
+    </script>
+</body>
+</html>
