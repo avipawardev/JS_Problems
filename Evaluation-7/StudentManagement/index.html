@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div style="border: 1px solid; width: 30%; display: flex; gap: 10px; align-items: center; flex-direction: column; padding: 15px; margin: auto;">
+        <h2>Create Student</h2>
+        <input type="text" id="name">
+        <input type="text" id="age">
+        <input type="text" id="grade">
+        <input type="text" id="section">
+        <input type="text" id="score">
+        <button onclick="createStudent()">Create</button>
+    </div>
+    <!-- <input type="text" id="search">
+        <select name="" id="selopt">
+            <option value="grade">Grade(9th - 12th)</option>
+            <option value="score">Score(A-D)</option>
+        </select> -->
+    <div id="container">
+        
+    </div>
+
+
+    <script>
+        let API = 'https://moviedatabase-fc904-default-rtdb.asia-southeast1.firebasedatabase.app/students'
+        let container = document.getElementById('container');
+    
+           async function fetchData(){
+            // let search = document.getElementById('search').value;
+            // let filoption = document.getElementById('selopt').value;
+            let res = await fetch(`${API}.json`);
+            let data = await res.json();
+            let students = Object.entries(data).map(([id,user])=>{
+                return {id,...user}
+            })
+
+            displayData(students)
+            }
+            fetchData()
+
+        async function displayData(students){
+            
+            container.innerHTML=""
+            students.forEach(ele=>{
+                let card = document.createElement('div');
+                card.innerHTML=`
+                <h2>Name: ${ele.name}</h2>
+                <p>Age: ${ele.age}</p>
+                <p>Grade: ${ele.grade}</p>
+                <p>Section: ${ele.section}</p>
+                <p>Score: ${ele.score}</p>
+                <button onclick="editData('${ele.id}')">Edit</button>
+                <button onclick="deleteData('${ele.id}')">Delete</button>
+                `
+                container.appendChild(card)
+            })
+        }
+        
+        async function createStudent(){
+            let name = document.getElementById('name').value;
+            let age = document.getElementById('age').value;
+            let grade = document.getElementById('grade').value;
+            let section = document.getElementById('section').value;
+            let score = document.getElementById('score').value;
+
+            if(!name || !age || !grade || !section || !score){
+                return;
+            }
+            let student = {
+                name,
+                age,
+                grade,
+                section,
+                score,
+            }
+
+            let res = await fetch(`${API}.json`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({name,age,grade,section,score})
+            });
+
+            if(res){
+                alert('User Added Successfully!')
+                fetchData()
+            }else{
+                alert('something went wrong!')
+            }
+
+           document.getElementById('name').value ="";
+           document.getElementById('age').value ="";
+           document.getElementById('grade').value ="";
+           document.getElementById('section').value ="";
+        document.getElementById('score').value ="";
+        }
+
+        async function editData(id){
+            // id = String(id)
+            let name = prompt("Enter New Name Here")
+            let res = await fetch(`${API}/${id}.json`,{
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({name:name})
+            })
+         
+           if(res){
+            fetchData()
+           }else{
+            alert('Something Went Wrong!')
+           }
+        }
+
+        async function deleteData(id){
+            let res = await fetch(`${API}/${id}.json`,{
+                method:"DELETE"
+            })
+
+            if(res){
+            fetchData()
+           }else{
+            alert('Something Went Wrong!')
+           }
+        }
+
+        // displayData()
+    </script>
+</body>
+</html>
