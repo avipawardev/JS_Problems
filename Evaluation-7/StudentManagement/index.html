@@ -38,7 +38,7 @@
             let students = Object.entries(data).map(([id,user])=>{
                 return {id,...user}
             })
-
+            students.sort((a,b)=>b.score - a.score)
             displayData(students)
             }
             fetchData()
