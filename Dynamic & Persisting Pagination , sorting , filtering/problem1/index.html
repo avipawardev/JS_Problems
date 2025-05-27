@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo App with Pagination</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    button {
+      margin: 2px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .todo-item {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin: 5px 0;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .pagination {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Todo App with Pagination</h2>
+  <button id="fetchTodos">Fetch Todos</button>
+  <div id="todoList"></div>
+  <div class="pagination" id="paginationButtons"></div>
+
+  <script>
+    const API_URL = "https://jsonplaceholder.typicode.com/todos";
+    const TODOS_PER_PAGE = 10;
+    let todos = [];
+
+    document.getElementById("fetchTodos").addEventListener("click", async () => {
+      const res = await fetch(API_URL);
+      todos = await res.json();
+      renderTodos(1);
+      renderPaginationButtons();
+    });
+
+    function renderTodos(page) {
+      const start = (page - 1) * TODOS_PER_PAGE;
+      const end = start + TODOS_PER_PAGE;
+      const slicedTodos = todos.slice(start, end);
+
+      const todoList = document.getElementById("todoList");
+      todoList.innerHTML = "";
+
+      slicedTodos.forEach(todo => {
+        const div = document.createElement("div");
+        div.className = "todo-item";
+        div.innerHTML = `${todo.title} <input type="checkbox" ${todo.completed ? "checked" : ""} disabled>`;
+        todoList.appendChild(div);
+      });
+    }
+
+    function renderPaginationButtons() {
+      const pageCount = Math.ceil(todos.length / TODOS_PER_PAGE);
+      const pagination = document.getElementById("paginationButtons");
+      pagination.innerHTML = "";
+
+      for (let i = 1; i <= pageCount; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.addEventListener("click", () => renderTodos(i));
+        pagination.appendChild(btn);
+      }
+    }
+  </script>
+</body>
+</html>

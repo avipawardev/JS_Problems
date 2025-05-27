@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Pagination App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .user-card {
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 5px;
+      margin: 10px 0;
+      background-color: #f4f4f4;
+    }
+    .pagination {
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>User List (with Pagination)</h2>
+  <div id="userList"></div>
+  <div class="pagination" id="paginationButtons"></div>
+  <p class="error" id="errorMsg"></p>
+
+  <script>
+    const BASE_URL = "https://jsonplaceholder.typicode.com/users";
+    const LIMIT = 6;
+    const TOTAL_USERS = 10; // JSONPlaceholder has only 10 users
+    const TOTAL_PAGES = Math.ceil(TOTAL_USERS / LIMIT);
+
+    const userList = document.getElementById("userList");
+    const paginationButtons = document.getElementById("paginationButtons");
+    const errorMsg = document.getElementById("errorMsg");
+
+    async function fetchUsers(page) {
+      try {
+        errorMsg.textContent = ""; // Clear any previous errors
+        const res = await fetch(`${BASE_URL}?_page=${page}&_limit=${LIMIT}`);
+        if (!res.ok) throw new Error("Failed to fetch user data");
+        const users = await res.json();
+        renderUsers(users);
+      } catch (error) {
+        errorMsg.textContent = error.message;
+      }
+    }
+
+    function renderUsers(users) {
+      userList.innerHTML = "";
+      users.forEach(user => {
+        const div = document.createElement("div");
+        div.className = "user-card";
+        div.innerHTML = `<strong>${user.name}</strong><br>${user.email}`;
+        userList.appendChild(div);
+      });
+    }
+
+    function renderPagination() {
+      paginationButtons.innerHTML = "";
+      for (let i = 1; i <= TOTAL_PAGES; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.addEventListener("click", () => fetchUsers(i));
+        paginationButtons.appendChild(btn);
+      }
+    }
+    fetchUsers(1);
+    renderPagination();
+  </script>
+</body>
+</html>
