@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #container{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    #movieName {
+        padding: 8px 4px;
+    }
+    #button{
+        margin-left: 12px;
+        padding: 8px 18px;
+        background-color: rgb(79, 168, 247);
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+    #box{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+    }
+</style>
+<body>
+    <div id="container">
+    <input type="text" id="movieName" placeholder="Enter Movie Name">
+    <button id="button">Search</button>
+    </div>
+     <div id="box"></div>
+</body>
+</html>
+
+<script>
+    let API_KEY = "8a73baa1";
+    
+    let timer;
+   document.getElementById('movieName').addEventListener("input", function (event) {
+
+      clearTimeout(timer)
+
+      timer = setTimeout(()=>{
+        let query = event.target.value;
+        console.log(movieName.value)
+      },1000)
+
+    });  
+
+document.getElementById('button').addEventListener("click", function(){
+  let query = document.getElementById("movieName").value;
+  if(query){
+     searchMovies(query);
+  }
+})    
+
+ async function searchMovies() {
+    let query = document.getElementById("movieName").value;
+
+    if (!query) alert("Please Enter Movie Name");
+
+    let res = await fetch(
+      `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+    );
+    let data = await res.json();
+    console.log(data.Search);
+
+    if (data.Search) {
+         moviesData = data.Search 
+         displayMovies(moviesData)
+    } else {
+      box.innerHTML = "<p>No results found</p>";
+    }
+  }
+
+  function displayMovies(movies) {
+    let box = document.getElementById("box");
+    box.innerHTML = "";
+
+    movies.forEach((movie) => {
+      let movieCard = document.createElement("div");
+      movieCard.innerHTML = `
+         <h3>${movie.Title} ${movie.Year}</h3>
+         <img id="image" src="${movie.Poster}" alt="${movie.Title}">
+        `;
+      box.appendChild(movieCard);
+    }); 
+  }
+
+
+</script>
