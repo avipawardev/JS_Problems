@@ -1,34 +1,30 @@
 {
-    "novel":[
-        {
-          "title": "The Great Adventure",
-          "author": "John Doe",
-          "price": 19.99,
-          "release_year": 2020,
-          "genre": "Adventure"
-        },
-        {
-          "title": "Mystery of the Lost World",
-          "author": "Jane Smith",
-          "price": 15.99,
-          "release_year": 2021,
-          "genre": "Mystery"
-        },
-        {
-          "title": "The Journey Begins",
-          "author": "Mark Johnson",
-          "price": 25.00,
-          "release_year": 2022,
-          "genre": "Fantasy"
-        },
-        {
-          "title": "The Last Escape",
-          "author": "Emily White",
-          "price": 18.50,
-          "release_year": 2019,
-          "genre": "Thriller"
-        }
-      ]
-      
-      
+  "books": [
+    {
+      "id": 1,
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "genre": "Science Fiction",
+      "publishedYear": 1965,
+      "available": true},
+    {
+      "id": 2,
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Dystopian",
+      "publishedYear": 1949,
+      "available": false}
+  ],
+  "members": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "membershipDate": "2023-01-15",
+      "active": true},
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "membershipDate": "2022-05-23",
+      "active": false}
+  ]
 }

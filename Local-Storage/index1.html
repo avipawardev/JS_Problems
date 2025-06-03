@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="input" type="text" placeholder="Enter your notes">
+    <button id="addbtn">Add Note</button>
+    <div id="notes"></div>
+    <button id="loadbtn">Load Notes</button>
+    <button id="clearbtn">Clear Notes</button>
+
+
+
+  
+
+    <script onload="displayNotes()">
+        let input = document.getElementById("input");
+        let addbtn = document.getElementById("addbtn");
+        let notes = document.getElementById("notes");
+        let loadbtn = document.getElementById("loadbtn");
+        let clearbtn = document.getElementById("clearbtn");
+    
+        addbtn.addEventListener('click',()=>{
+            let value = input.value;
+            if(input.value.trim() == ""){
+                alert("invalid note!")
+                return;
+            }
+
+            let savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+
+            savedNotes.push(value);
+
+            // let obj = {
+                
+            // }
+
+            localStorage.setItem('notes',JSON.stringify(savedNotes));
+
+            displayNotes(savedNotes);
+            input.value = ""
+        });
+
+        loadbtn.addEventListener('click',loadNotes);
+
+        clearbtn.addEventListener('click',()=>{
+            localStorage.removeItem('notes');
+            notes.innerHTML=""
+        })
+
+        function displayNotes(notesArray){
+            notes.innerHTML=""
+            notesArray.forEach(noteTxt => {
+                let note = document.createElement('p');
+                note.innerText=noteTxt;
+                notes.appendChild(note);
+            });
+        };
+
+        function loadNotes(){
+            let updatedarr = JSON.parse(localStorage.getItem('notes'));
+            displayNotes(updatedarr)
+        }
+
+    </script>
+</body>
+</html>
