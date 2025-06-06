@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #search-box {
+      padding: 10px;
+      font-size: 18px;
+      width: 300px;
+    }
+
+    #results {
+      margin-top: 20px;
+    }
+
+    .name {
+      padding: 5px;
+      margin: 2px;
+    }
+
+    .highlight {
+      background-color: yellow;
+    }
+
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #stats {
+      margin-top: 15px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Search Dashboard</h1>
+  <input type="text" id="search-box" placeholder="Search names..." />
+  <div id="stats">
+    Keystrokes: <span id="keystrokes">0</span> |
+    Debounced Searches: <span id="debounced">0</span>
+  </div>
+
+  <div id="results"></div>
+
+  <button id="back-to-top">Back to Top</button>
+
+  <script>
+    const names = [
+      "Aarav", "Aanya", "Abhay", "Abhinav", "Aditya", "Aisha", "Akanksha", "Akash", "Akshay", "Alok",
+      "Amar", "Amit", "Ananya", "Aniket", "Anil", "Anita", "Anjali", "Ankit", "Ankur", "Ansh",
+      "Anshika", "Anuj", "Anusha", "Anvi", "Arjun", "Arnav", "Arpita", "Arvind", "Aryan", "Ashish",
+      "Ayesha", "Bhavna", "Bhupesh", "Chaitanya", "Charu", "Chirag", "Deepa", "Deepak", "Dev", "Devansh",
+      "Dhruv", "Diya", "Divya", "Ekta", "Farhan", "Gaurav", "Gayatri", "Geeta", "Harsh", "Harshit",
+      "Heena", "Himanshu", "Isha", "Ishita", "Jai", "Jatin", "Jaya", "Jyoti", "Kabir", "Kajal",
+      "Karan", "Kavita", "Kiran", "Krishna", "Kritika", "Kunal", "Lakshmi", "Lavanya", "Laxman", "Madhav",
+      "Madhuri", "Mahesh", "Manish", "Manoj", "Mayank", "Meena", "Meera", "Mohit", "Monika", "Muskan",
+      "Namrata", "Nancy", "Nandini", "Naveen", "Neel", "Neha", "Nikhil", "Nikita", "Nilesh", "Nimrit",
+      "Niraj", "Nisha", "Nitin", "Om", "Pallavi", "Pankaj", "Pooja", "Pranav", "Prashant", "Preeti",
+      "Priya", "Rachit", "Radha", "Rahul", "Raj", "Rajeev", "Rakesh", "Ramesh", "Rani", "Rashmi",
+      "Ravi", "Reena", "Rhea", "Rishi", "Ritika", "Rohit", "Ruchi", "Sagar", "Sakshi", "Sameer",
+      "Sandeep", "Sanjay", "Sanya", "Sapna", "Sarthak", "Sarvesh", "Satish", "Shaurya", "Shikha", "Shilpa",
+      "Shiv", "Shivam", "Shraddha", "Shruti", "Simran", "Sneha", "Sonam", "Sonal", "Sourabh", "Suhana",
+      "Sujal", "Suman", "Sumit", "Sunil", "Suraj", "Swati", "Tanmay", "Tanya", "Tarun", "Tina",
+      "Uday", "Ujjwal", "Urmila", "Utkarsh", "Vaibhav", "Vaishali", "Varun", "Ved", "Veena", "Vibha",
+      "Vicky", "Vidhi", "Vidya", "Vikas", "Vikram", "Vimal", "Vinay", "Vineet", "Vipin", "Vishal",
+      "Yash", "Yuvraj", "Zoya", "Zeenat", "Abbas", "Alisha", "Arman", "Arya", "Bharat", "Bhavesh",
+      "Bobby", "Chandan", "Deepika", "Dhara", "Eshan", "Garima", "Girish", "Govind", "Gunjan", "Hansika",
+      "Hardik", "Harleen", "Hemant", "Hiral", "Imran", "Iqbal", "Jaspreet", "Jaya", "Kritika", "Kushagra",
+      "Lakshya", "Mahima", "Mansi", "Mira", "Naman", "Navya", "Niharika", "Omkar", "Parth", "Payal",
+      "Prachi", "Prerna", "Ragini", "Rajat", "Reyansh", "Rudra", "Sahil", "Saksham", "Samar", "Sanchit",
+      "Saniya", "Shaheen", "Sharad", "Shefali", "Siddharth", "Smita", "Tanvi", "Tejas", "Tushar", "Vaidehi"
+    ];
+
+    const searchBox = document.getElementById("search-box");
+    const results = document.getElementById("results");
+    const keystrokeEl = document.getElementById("keystrokes");
+    const debounceEl = document.getElementById("debounced");
+    const backToTopBtn = document.getElementById("back-to-top");
+
+    let keystrokes = 0;
+    let debouncedSearches = 0;
+
+    function displayResults(query = "") {
+      results.innerHTML = "";
+
+      const filtered = query
+        ? names.filter(name => name.toLowerCase().includes(query.toLowerCase()))
+        : names;
+
+      filtered.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "name";
+
+        if (query) {
+          const matchIndex = name.toLowerCase().indexOf(query.toLowerCase());
+          const before = name.slice(0, matchIndex);
+          const match = name.slice(matchIndex, matchIndex + query.length);
+          const after = name.slice(matchIndex + query.length);
+          div.innerHTML = `${before}<span class="highlight">${match}</span>${after}`;
+        } else {
+          div.textContent = name;
+        }
+
+        results.appendChild(div);
+      });
+    }
+
+    // Show all on first load
+    displayResults();
+
+    function debounce(func, delay) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    const debouncedSearch = debounce((e) => {
+      debouncedSearches++;
+      debounceEl.textContent = debouncedSearches;
+      displayResults(e.target.value);
+    }, 800);
+
+    searchBox.addEventListener("input", (e) => {
+      keystrokes++;
+      keystrokeEl.textContent = keystrokes;
+      debouncedSearch(e);
+    });
+
+    // Scroll listener
+    function throttle(func, delay) {
+      let last = 0;
+      return (...args) => {
+        const now = Date.now();
+        if (now - last >= delay) {
+          last = now;
+          func(...args);
+        }
+      };
+    }
+
+    window.addEventListener("scroll", throttle(() => {
+      backToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+    }, 500));
+
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>

@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h1>Student Record Manager</h1>
+    <h1> Student Record Manager</h1>
 
     <form action="" id="form">
         <input type="text" placeholder="Name" id="name">
@@ -105,14 +105,14 @@
         let age_sort = document.getElementById('age-sort');
         age_sort.addEventListener('change',()=>{
             let value = age_sort.value;
-            let sorted;
+            let sorted=[...data];
                 if(value=='asc'){
-                    sorted = data.sort((a,b)=>{
+                    sorted = sorted.sort((a,b)=>{
                         return a.age - b.age;
                     });
                     displayData(sorted)
                 }else if(value=='desc'){
-                    sorted = data.sort((a,b)=>{
+                    sorted = sorted.sort((a,b)=>{
                         return b.age - a.age;
                     });
                     displayData(sorted)
@@ -125,14 +125,14 @@
         score_sort.addEventListener('change',()=>{
             let value = score_sort.value;
 
-            let sorted;
+            let sorted=[...data];
             if(value=='asc'){
-                sorted = data.sort((a,b)=>{
+                sorted = sorted.sort((a,b)=>{
                     return a.score - b.score
                 })
                 displayData(sorted)
             }else if(value == 'desc'){
-                sorted = data.sort((a,b)=>{
+                sorted = sorted.sort((a,b)=>{
                     return b.score - a.score;
                 })
                 displayData(sorted);
