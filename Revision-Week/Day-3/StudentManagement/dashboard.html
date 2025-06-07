@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-                button{
+        body{
+            text-align: center;
+            position: relative;
+        }
+                #logout-btn{
             padding: 5px;
             margin: 10px 0;
             background:rgb(219, 49, 49);
@@ -13,14 +17,26 @@
             font-size: 1rem;
             border-radius: 5px;
             border: none;
+            position: absolute;
+            top: 0;
+            right: 0;
         }
-        button:hover{
+        #logout-btn:hover{
             background-color: red;
         }
+
     </style>
 </head>
 <body>
     <h1>Dashboard</h1>
+
+    <div id="add-task">
+        <input type="text" placeholder="Title" id="title">
+        <input type="text" placeholder="Description" id="descr">
+        <button>Add Task</button>
+    </div>
+
+
     <button id="logout-btn">LogOut</button>
     <script type="module" src="./js/auth.js"></script>
     <a href="login.html"></a>
