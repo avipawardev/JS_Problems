@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <style>
+        #signup-container{
+            text-align: center;
+            width: 30%;
+            height: 25rem;
+            border: 1px solid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 10px;
+        }
+        input{
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button{
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            background:royalblue;
+            color: white;
+            font-size: 1.3rem;
+        }
+        button:hover{
+            background-color: rgb(48, 48, 225);
+        }
+        h1{
+            font-size: 3rem;
+        }
+        p{
+            font-size: 1.5rem;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="signup-container">
+        <h1>SignUp</h1>
+        <input type="email" placeholder="Email" id="signup-email">
+        <input type="password" placeholder="Password" id="signup-password">
+        <button id="signup-btn">SignUp</button>
+        <p>Already have an account <a href="login.html">Login</a></p>
+        <p id="signup-msg"></p>
+    </div>
+    <script type="module" src="./js/auth.js"></script>
+</body>
+</html>

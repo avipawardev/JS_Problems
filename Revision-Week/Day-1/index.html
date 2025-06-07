@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        #search{
+            margin-top: 10px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1> Student Record Manager</h1>
+
+    <form action="" id="form">
+        <input type="text" placeholder="Name" id="name">
+        <input type="text" placeholder="Batch" id="batch">
+        <input type="text" placeholder="Age" id="age">
+        <input type="text" placeholder="Score" id="score">
+        <button>Submit</button>
+    </form>
+
+    <input type="text" id="search" placeholder="search...">
+
+    <select name="" id="age-sort">
+        <option value="">SortByAge</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+    <select name="" id="score-sort">
+        <option value="">SortByScore</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+    <div id="container">
+
+    </div>
+
+    <script>
+        let data = [
+  { name: "Avi Pawar", batch: "Web-19", age: 23, score: 87 },
+  { name: "Neha Sharma", batch: "Web-18", age: 22, score: 91 },
+  { name: "Rahul Meena", batch: "Web-20", age: 24, score: 76 },
+  { name: "Sneha Patil", batch: "Web-19", age: 23, score: 88 },
+  { name: "Aman Singh", batch: "Web-17", age: 25, score: 81 },
+  { name: "Pooja Verma", batch: "Web-18", age: 22, score: 93 },
+  { name: "Ravi Kumar", batch: "Web-20", age: 24, score: 69 },
+  { name: "Divya Jain", batch: "Web-17", age: 26, score: 85 },
+  { name: "Kunal Joshi", batch: "Web-19", age: 23, score: 78 },
+  { name: "Meera Das", batch: "Web-20", age: 21, score: 90 }
+];
+
+            document.getElementById('form').addEventListener('submit',(e)=>{
+            e.preventDefault();
+            let name = document.getElementById('name').value;
+            let batch = document.getElementById('batch').value;
+            let age = document.getElementById('age').value;
+            let score = document.getElementById('score').value;
+
+            let obj = {name,batch,age:Number(age),score:Number(score)};
+            data.push(obj);
+            e.target.reset()
+            console.log(data);
+            displayData(data);
+        });
+
+        function displayData(students){
+            let container = document.getElementById('container');
+            container.innerHTML="";
+           students.forEach((ele,index)=>{
+            let card = document.createElement("div");
+            card.innerHTML=`
+                <h2>Name:${ele.name}</h2>
+                <p>Batch:${ele.batch}</p>
+                <p>Age:${ele.age}</p>
+                <p>Score:${ele.score}</p>
+                <button onclick=editStudent(${index})>Edit</button>
+                <button onclick=deleteStudent(${index})>Delete</button>
+                 `
+                 container.appendChild(card);
+           })
+        };
+        //Delete Student
+        function deleteStudent(index){
+            data.splice(index,1);
+            displayData()
+        }
+//Search Student
+        let search = document.getElementById('search');
+        search.addEventListener('input', () => {
+        let val = search.value.toLowerCase();
+        let filtered = data.filter((ele) => {
+        return ele.name.toLowerCase().includes(val);
+        });
+        displayData(filtered);
+        });
+
+        //Sorting Using Age
+        let age_sort = document.getElementById('age-sort');
+        age_sort.addEventListener('change',()=>{
+            let value = age_sort.value;
+            let sorted=[...data];
+                if(value=='asc'){
+                    sorted = sorted.sort((a,b)=>{
+                        return a.age - b.age;
+                    });
+                    displayData(sorted)
+                }else if(value=='desc'){
+                    sorted = sorted.sort((a,b)=>{
+                        return b.age - a.age;
+                    });
+                    displayData(sorted)
+                }
+        })
+
+        //Sorting Using Score
+
+        let score_sort = document.getElementById('score-sort')
+        score_sort.addEventListener('change',()=>{
+            let value = score_sort.value;
+
+            let sorted=[...data];
+            if(value=='asc'){
+                sorted = sorted.sort((a,b)=>{
+                    return a.score - b.score
+                })
+                displayData(sorted)
+            }else if(value == 'desc'){
+                sorted = sorted.sort((a,b)=>{
+                    return b.score - a.score;
+                })
+                displayData(sorted);
+            }
+        })
+
+        displayData(data);
+    </script>
+</body>
+</html>
