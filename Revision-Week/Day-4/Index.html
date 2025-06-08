@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Product-Explorer</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <div id="query-cont">
+        <input type="text" id="search" placeholder="search...">
+        <p>Sort Products:</p>
+        <select name="" id="sort">
+            <option value="asc">Low-High</option>
+            <option value="desc">High-Low</option>
+            <option value="alpha">A-Z</option>
+        </select>
+        <p>Filter Products:</p>
+        <select name="" id="filter">
+            <option value="men's clothing">Men's Clothing</option>
+            <option value="jewelery">Jewelery</option>
+            <option value="electronics">Electronics</option>
+        </select>
+    </div>
+    <div id="container">
+    </div>
+
+    <button id="prev">Prev</button>
+    <button id="next">Next</button>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
