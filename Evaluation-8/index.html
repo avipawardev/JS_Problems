@@ -13,7 +13,7 @@
         <option value="">Status</option>
         <option value="Alive">Alive</option>
         <option value="Dead">Dead</option>
-        <option value="Unknown">Unknown</option>
+        <option value="unknown">Unknown</option>
       </select>
       <select name="species" id="fil-species">
         <option value="">Species</option>
@@ -22,18 +22,36 @@
         <option value="Robot">Robot</option>
       </select>
     </div>
-    <div id="container"></div>
+    <div id="container">
+        <div id="char-container">
+            <!-- <div onclick="characterInfo()" id="char">
+                <div id="img-div">
+                    <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="${ele.name}">
+                </div>
+                <h3>Name: ${ele.name}</h3>
+                <p>Species: ${ele.species}</p>
+                <p>Status: ${ele.status}</p>
+                <p>Location: ${ele.location.name}</p>
+            </div> -->
+        </div>
+    </div>
     <button id="prev">Prev</button>
     <button id="next">Next</button>
   </body>
 </html>
 <script>
+    let currentPage = 1;
   let api = "https://rickandmortyapi.com/api/character";
   let container = document.getElementById("container");
 let characters = []
   async function fetchData() {
     let res = await fetch(api);
     let data = await res.json();
+    // let count = pagination();
+    document.getElementById('prev').addEventListener('click',()=>{
+        let val = pagination(currentPage);
+        console.log(val.getValue())
+    })
     characters=data.results;
     displayData(characters);
     // console.log(data.results);
@@ -45,7 +63,7 @@ let characters = []
     data.forEach((ele) => {
       let card = document.createElement("div");
       card.innerHTML = `
-                <div class="card">
+                <div onclick="characterInfo(${ele.id})" class="card">
                 <div id="img-div">
                     <img src="${ele.image}" alt="${ele.name}">
                 </div>
@@ -90,7 +108,44 @@ statusFilter.addEventListener('change',()=>{
 
 
 let speciesFilter = document.getElementById('fil-species')
+speciesFilter.addEventListener('change',()=>{
+    let value = speciesFilter.value;
+    let filtered = characters.filter((item)=>{
+        if(value){
+            return item.species==value
+        }else{
+            return characters;
+        }
+    });
+    displayData(filtered)
+})
 
+function pagination(initialvalue=0){
+    
+    }
+    // let prev = document.getElementById('prev');
+    // let next = document.getElementById('next');
+
+    // prev.addEventListener('click',()=>{
+    //     console.log(data.info.prev)
+    // })
+
+    // next.addEventListener('click',()=>{
+    //     console.log(data.info.next);
+    // })
+}
+
+
+
+// function characterInfo(id){
+//     console.log(id);
+//     let close = document.getElementById('close')
+//     if(close){
+
+//     }
+//     document.querySelector('.card').classList.add('switched');
+
+// }
 
   fetchData();
 </script>

@@ -35,3 +35,22 @@ body{
     border:1px solid lightgray;
     border-radius: 1rem;
 }
+
+.switched{
+    display: none;
+}
+
+#char-container{
+    background-color: transparent;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+#char-container>#char{
+    border: 1px solid lightgrey;
+    padding: 1rem;
+    border-radius: 1rem;
+    position: absolute;
+    top: 20%;
+    left:40%;
+}
