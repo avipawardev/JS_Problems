@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="nav">
+      <input type="text" id="search" placeholder="search.." />
+      <select name="status" id="fil-status">
+        <option value="">Status</option>
+        <option value="Alive">Alive</option>
+        <option value="Dead">Dead</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+      <select name="species" id="fil-species">
+        <option value="">Species</option>
+        <option value="Human">Human</option>
+        <option value="Alien">Alien</option>
+        <option value="Robot">Robot</option>
+      </select>
+    </div>
+    <div id="container"></div>
+    <button id="prev">Prev</button>
+    <button id="next">Next</button>
+  </body>
+</html>
+<script>
+  let api = "https://rickandmortyapi.com/api/character";
+  let container = document.getElementById("container");
+let characters = []
+  async function fetchData() {
+    let res = await fetch(api);
+    let data = await res.json();
+    characters=data.results;
+    displayData(characters);
+    // console.log(data.results);
+  }
+
+  function displayData(data) {
+    container.innerHTML = "";
+
+    data.forEach((ele) => {
+      let card = document.createElement("div");
+      card.innerHTML = `
+                <div class="card">
+                <div id="img-div">
+                    <img src="${ele.image}" alt="${ele.name}">
+                </div>
+                <h3>Name: ${ele.name}</h3>
+                <p>Species: ${ele.species}</p>
+                <p>Status: ${ele.status}</p>
+                <p>Location: ${ele.location.name}</p>
+            </div>
+            `
+            container.appendChild(card)
+            ;
+    });
+  }
+
+let searchInput = document.getElementById("search");
+let timer;
+searchInput.addEventListener('input',()=>{
+let value = searchInput.value;
+
+let filtered = characters.filter((item)=>(
+    item.name.toLowerCase().includes(value.toLowerCase())
+));
+clearTimeout(timer);
+timer = setTimeout(() => {
+    displayData(filtered)
+},300);
+});
+
+let statusFilter = document.getElementById('fil-status');
+statusFilter.addEventListener('change',()=>{
+    let value = statusFilter.value;
+    let filtered = characters.filter((item)=>{
+        if(value){
+            return item.status==value
+        }else{
+            return characters;
+        }
+    });
+    // console.log(filtered);
+    displayData(filtered)
+})
+
+
+let speciesFilter = document.getElementById('fil-species')
+
+
+  fetchData();
+</script>
