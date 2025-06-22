@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .card {
+        border: 1px solid;
+        width: 20%;
+        text-align: center;
+        border-radius: 1rem;
+      }
+      .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function Card({ name, content }) {
+        return (
+          <div class="card">
+            <h2>Name: {name}</h2>
+            <p>
+              {" "}
+              <strong>Content: </strong>
+              {content}
+            </p>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div class='container'>
+            <Card
+              name="Sangster"
+              content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, maiores!"
+            />
+
+            <Card
+              name="Shivam"
+              content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, maiores!"
+            />
+
+            <Card
+              name="Prakhar"
+              content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, maiores!"
+            />
+          </div>
+        );
+      }
+
+      let root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"/>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .heading{
+            border: 1px solid lightgrey;
+            display: flex;
+            justify-content:space-between;
+            padding: 0 5rem;
+            gap: 1rem;
+            text-align: center;
+        }
+        .purple{
+            color: #a079ea;
+        }
+        .card{
+            display: flex;
+            border: 1px solid lightgray;
+            justify-content: space-around;
+            align-items: center;
+        }
+        button{
+            padding: 0.8rem;
+            border-radius: 0.5rem;
+            border: none;
+            color: #a079ea;
+        }
+        button:hover{
+            background-color: #a079ea;
+            color: white;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function Heading() {
+        return (
+          <div class="heading">
+            <h1>The Right Plan For <span class="purple">Your Business</span></h1>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit,
+              eaque itaque? At illum laboriosam rem maiores sed soluta eius eos
+              ex, consequatur quis maxime alias sint aliquam, vitae officiis
+              voluptatibus?
+            </p>
+          </div>
+        );
+      }
+
+      function Card({pack,price}) {
+        return <div class="card">
+            <h2>{pack}</h2>
+            <div class="plans">
+                <p> <i class="ri-checkbox-circle-line"></i> Lorem, ipsum dolor.</p>
+                <p> <i class="ri-checkbox-circle-line"></i> Lorem, ipsum dolor.</p>
+                <p> <i class="ri-checkbox-circle-line"></i> Lorem, ipsum dolor.</p>
+                <p> <i class="ri-checkbox-circle-line"></i> Lorem, ipsum dolor.</p>
+            </div>
+            <h1>{price}</h1>
+            <button>Get Started</button>
+            </div>;
+      }
+
+      function App() {
+        return (
+          <div class="container">
+            <Heading />
+            <Card pack="Starter" price="Free"/>
+            <Card pack="Lorem Plus" price="$32"/>
+            <Card pack="Lorem Pro" price="$50"/>
+          </div>
+        );
+      }
+
+      let root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
