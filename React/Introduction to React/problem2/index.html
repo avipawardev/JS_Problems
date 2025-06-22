@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question-2</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+
+
+    <script>
+        let list = ['React','Javascript','CSS'];
+        let elem = React.createElement('ul',null,list.map(ele=>React.createElement('li',null,ele)))
+        let root = ReactDOM.createRoot(document.getElementById('root'))
+        root.render(elem)
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+
+const { useState } = React;
+
+let vanillaUpdateCount = 0;
+
+function App() {
+  const [reactTitle, setReactTitle] = useState("React Title");
+  const [reactUpdateCount, setReactUpdateCount] = useState(0);
+
+  const changeVanillaTitle = () => {
+    document.getElementById("vanilla-title").innerText = "Vanilla Title " + (vanillaUpdateCount + 1);
+    vanillaUpdateCount++;
+    document.getElementById("vanilla-count").innerText = vanillaUpdateCount;
+  };
+
+  const changeReactTitle = () => {
+    setReactTitle("React Title " + (reactUpdateCount + 1));
+    setReactUpdateCount(prev => prev + 1);
+  };
+
+  return React.createElement("div", null,
+    React.createElement("div", null,
+      React.createElement("button", { onClick: changeVanillaTitle }, "Change Title (Vanilla JS)"),
+      React.createElement("div", null,
+        "Title: ",
+        React.createElement("span", { id: "vanilla-title" }, "Vanilla Title"),
+        " | DOM Updates: ",
+        React.createElement("span", { id: "vanilla-count" }, "0")
+      )
+    ),
+    React.createElement("div", { style: { marginTop: "20px" } },
+      React.createElement("button", { onClick: changeReactTitle }, "Change Title (React)"),
+      React.createElement("div", null,
+        "Title: ", reactTitle,
+        " | React State Updates: ", reactUpdateCount
+      )
+    )
+  );
+}
+        let root = ReactDOM.createRoot(document.getElementById('root'))
+        root.render(React.createElement(App));
+    </script>
+</body>
+</html>

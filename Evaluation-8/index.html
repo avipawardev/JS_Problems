@@ -41,17 +41,17 @@
 </html>
 <script>
     let currentPage = 1;
+        let prev = document.getElementById('prev');
+        let next = document.getElementById('next');
   let api = "https://rickandmortyapi.com/api/character";
+
   let container = document.getElementById("container");
 let characters = []
-  async function fetchData() {
-    let res = await fetch(api);
+  async function fetchData(page=1) {
+    let apiUrl = `${api}?page=${page}`
+    let res = await fetch(apiUrl);
     let data = await res.json();
     // let count = pagination();
-    document.getElementById('prev').addEventListener('click',()=>{
-        let val = pagination(currentPage);
-        console.log(val.getValue())
-    })
     characters=data.results;
     displayData(characters);
     // console.log(data.results);
@@ -120,9 +120,21 @@ speciesFilter.addEventListener('change',()=>{
     displayData(filtered)
 })
 
-function pagination(initialvalue=0){
-    
+prev.addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        fetchData(currentPage);
     }
+});
+
+next.addEventListener('click', () => {
+    currentPage++;
+    fetchData(currentPage);
+});
+
+// function pagination(initialvalue=0){
+    
+//     }
     // let prev = document.getElementById('prev');
     // let next = document.getElementById('next');
 
