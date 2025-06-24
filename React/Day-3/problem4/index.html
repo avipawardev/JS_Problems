@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basic Task Manager</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-    
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+      // Initialize state
+      const [tasks, setTasks] = useState(["Buy milk", "Study React"]);
+      const [newTask, setNewTask] = useState("");
+
+      function addTask() {
+        if (newTask.trim() === "") return;
+
+        setTasks([...tasks, newTask]);
+        setNewTask("");
+      }
+
+      function clearAll() {
+        setTasks([]);
+      }
+
+      return (
+        <div>
+          <h2>My Tasks</h2>
+
+          <input
+            type="text"
+            placeholder="Enter new task"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+
+          <button onClick={addTask}>Add Task</button>
+          <button onClick={clearAll}>Clear All</button>
+
+          {tasks.length > 0 ? (
+            <ul>
+              {tasks.map((task, index) => (
+                <li key={index}>{task}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No tasks available.</p>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
 </body>
 </html>
