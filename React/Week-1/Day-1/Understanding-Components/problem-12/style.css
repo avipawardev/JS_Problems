@@ -1,0 +1,8 @@
+#box{
+    display: flex;
+    text-align: center;
+}
+#box>div{
+     border: 2px solid;
+     margin-left: 12px;
+}

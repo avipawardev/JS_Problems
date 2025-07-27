@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+
+    function DisplayData(props){
+        return(
+            <>
+            <div id="childBox">
+
+                <h2>{props.card.title}</h2>
+                <p>{props.card.description}</p>
+                <h1>{props.card.price}</h1>
+                <button>{props.card.button}</button>
+            </div>
+            </>
+        )
+    }
+
+
+function App(){
+    let card = [
+        {
+       title : "Started",
+       description : "✅lorem ipsum",
+       price : "Free",
+       button : "Get Started"
+        },
+        {
+       title : "Lorem Plus",
+       description : "✅lorem ipsum",
+       price : "$32.00",
+       button : "Get Started"
+        },
+        {
+       title : "Lorem Pro",
+       description : "✅lorem ipsum",
+       price : "$50.00",
+       button : "Get Started"
+        },
+    ]
+
+    return (
+        <div>
+            <div>
+                <h2>The Right Plan for Your Business</h2></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti maiores, ullam, dicta recusandae consectetur porro facilis hic voluptas ex odio ipsum repellendus error suscipit? Dignissimos minima harum modi fugit rem.</p>
+
+           {card.map((card,index)=>(
+            <DisplayData key={index} card={card}/>
+    ))} 
+        </div>
+    )
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>

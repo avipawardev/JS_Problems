@@ -1,0 +1,12 @@
+#childBox{
+    display: flex;
+    border: 2px solid;
+     justify-content: space-around;
+    align-items: center;
+}
+button:nth-child(1){
+   background-color: #dcdcdc;
+   color: purple;
+   font-size: 18px;
+   padding: 5px;
+}
