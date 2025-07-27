@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        border: 0.1rem solid;
+        font-size: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const {useState} = React;
+
+      function DisplayComp({ value }) {
+        return (
+          <div>
+            <h1>
+              {value == "home"
+                ? "Welcome to Home"
+                : value == "about"
+                ? "About Us"
+                : "Contact Us"}
+            </h1>
+          </div>
+        );
+      }
+
+      function Navbar({onSelect}) {
+        return (
+          <div className="navbar">
+            <p onClick={()=>onSelect("home")}>Home</p>
+            <p onClick={()=>onSelect("about")}>About</p>
+            <p onClick={()=>onSelect("contact")}>Contact</p>
+          </div>
+        );
+      }
+
+      function App() {
+        const [selectedPage , setSelectedPage] = useState('home');
+        return (
+          <>
+          <Navbar onSelect={setSelectedPage} />
+          <DisplayComp value={selectedPage} />
+          </>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
