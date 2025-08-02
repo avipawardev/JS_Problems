@@ -4,6 +4,7 @@ import axios from 'axios';
 import './index.css'
 import App from './App.jsx'
 import { RecipeContext } from './context/recipes.jsx'
+import { BrowserRouter} from "react-router-dom";
 
 
     async function fetchData(){
@@ -16,7 +17,9 @@ import { RecipeContext } from './context/recipes.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RecipeContext.Provider value={data}>
+    <BrowserRouter>
     <App />
+    </BrowserRouter>
     </RecipeContext.Provider>
   </StrictMode>,
 )

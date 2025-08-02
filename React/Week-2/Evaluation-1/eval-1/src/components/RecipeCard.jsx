@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { allRecipes } from '../context/recipes'
 import { ListFormat } from 'typescript'
 
 const RecipeCard = () => {
+    const [fav,setFav] = useState(false)
     const recipes = allRecipes()
   return (
     <div style={{display:'grid', gridTemplateColumns:"repeat(4,1fr)",gap:'15px'}}>
@@ -13,6 +14,7 @@ const RecipeCard = () => {
         <h3>{ele.name}</h3>
         <p>Ingredients</p>
         <ul>{ele.ingredients.map((ele)=> <li>{ele}</li>)}</ul>
+        <i onClick={()=>setFav(!fav)} class="ri-heart-line" style={{color:fav?'red':'black'}}></i>
     </div>)}
     {console.log(recipes)}
     </div>
