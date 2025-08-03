@@ -1,0 +1,36 @@
+.quote-container {
+  width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  text-align: center;
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+.quote {
+  font-size: 1.3rem;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.author {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.get-quote-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.get-quote-btn:hover {
+  background-color: #0056b3;
+}
