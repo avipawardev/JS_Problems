@@ -6,9 +6,9 @@ const UserCard = ({users}) => {
    const {followingUsers,setFollowingUsers}= useContext(Follow);
 
 function addFollow(name,email,username,website){
-    let user = {name:'data'}
+//     let user = {name,email,username,website}
 //  setFollowingUsers([...followingUsers,user])
-setFollowingUsers([{user}])
+setFollowingUsers(()=> prev=>prev+1)
 }
 
   return (

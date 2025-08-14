@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import UserCard from './UserCard';
+import { useNavigate } from 'react-router-dom';
 
 const UserList = () => {
     const [users,setUsers]=useState([]);
-
-
+    const navigate = useNavigate()
 
 useEffect(()=>{
    const fetchData =  async () => {
@@ -18,6 +18,9 @@ useEffect(()=>{
 
   return (
     <div>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-around',}}>
+    <button onClick={()=> navigate('/following')} style={{color:'white',backgroundColor:'salmon'}}>♡ Following</button>
+    </div>
         <UserCard users={users}/>
     </div>
   )
