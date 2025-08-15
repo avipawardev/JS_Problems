@@ -1,6 +1,13 @@
 import React, { useCallback, useRef, useState } from "react";
 import useStore from "../state/useStore.jsx";
 
+// Constants for better maintainability
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_IMAGE_SIDE = 800; // Maximum dimension for resizing
+const PROCESSING_TIMEOUT = 10000; // 10 seconds
+const BITMAP_TIMEOUT = 5000; // 5 seconds
+const IMAGE_LOAD_TIMEOUT = 8000; // 8 seconds
+
 const FilePicker = () => {
   const { file, fileName, fileSize, setFile, setImageData, setImageBitmap } =
     useStore();
@@ -16,7 +23,7 @@ const FilePicker = () => {
         console.log("Processing file:", selectedFile.name);
 
         // Validate file size
-        if (selectedFile.size > 5 * 1024 * 1024) {
+        if (selectedFile.size > MAX_FILE_SIZE) {
           throw new Error("File size exceeds 5MB limit");
         }
 
@@ -59,7 +66,10 @@ const FilePicker = () => {
 
         // Add timeout to prevent hanging
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("Processing timeout")), 10000)
+          setTimeout(
+            () => reject(new Error("Processing timeout")),
+            PROCESSING_TIMEOUT
+          )
         );
 
         result = await Promise.race([processPromise, timeoutPromise]);
@@ -71,7 +81,10 @@ const FilePicker = () => {
         try {
           const bitmapPromise = createImageBitmap(selectedFile);
           const bitmapTimeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Bitmap creation timeout")), 5000)
+            setTimeout(
+              () => reject(new Error("Bitmap creation timeout")),
+              BITMAP_TIMEOUT
+            )
           );
 
           const imageBitmap = await Promise.race([
@@ -128,7 +141,7 @@ const FilePicker = () => {
       // Add timeout for image loading
       const loadTimeout = setTimeout(() => {
         reject(new Error("Image loading timeout"));
-      }, 8000);
+      }, IMAGE_LOAD_TIMEOUT);
 
       img.onload = () => {
         clearTimeout(loadTimeout);
@@ -139,7 +152,7 @@ const FilePicker = () => {
 
           // Resize if needed (more aggressive resizing for performance)
           let { width, height } = img;
-          const maxSide = 800; // Reduced from 1200 for faster processing
+          const maxSide = MAX_IMAGE_SIDE; // Reduced from 1200 for faster processing
 
           if (width > maxSide || height > maxSide) {
             const ratio = Math.min(maxSide / width, maxSide / height);
@@ -155,7 +168,9 @@ const FilePicker = () => {
           const imageData = ctx.getImageData(0, 0, width, height);
 
           // Clean up
-          URL.revokeObjectURL(img.src);
+          if (img.src && img.src.startsWith("blob:")) {
+            URL.revokeObjectURL(img.src);
+          }
 
           resolve({
             imageData,
@@ -194,7 +209,7 @@ const FilePicker = () => {
         // Add timeout for SVG loading
         const loadTimeout = setTimeout(() => {
           reject(new Error("SVG loading timeout"));
-        }, 8000);
+        }, IMAGE_LOAD_TIMEOUT);
 
         img.onload = () => {
           clearTimeout(loadTimeout);
@@ -204,7 +219,7 @@ const FilePicker = () => {
             const ctx = canvas.getContext("2d");
 
             // Set reasonable size for SVG (smaller for performance)
-            const width = Math.min(img.width || 800, 800);
+            const width = Math.min(img.width || MAX_IMAGE_SIDE, MAX_IMAGE_SIDE);
             const height = Math.min(img.height || 600, 600);
 
             canvas.width = width;
@@ -218,7 +233,9 @@ const FilePicker = () => {
             const imageData = ctx.getImageData(0, 0, width, height);
 
             // Clean up
-            URL.revokeObjectURL(img.src);
+            if (img.src && img.src.startsWith("blob:")) {
+              URL.revokeObjectURL(img.src);
+            }
 
             resolve({
               imageData,

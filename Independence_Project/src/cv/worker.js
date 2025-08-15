@@ -1,14 +1,19 @@
 // Simple, reliable OpenCV.js worker for BIS validation
+
+// Constants for better maintainability
+const WORKER_OPENCV_TIMEOUT = 15000; // 15 seconds
+const WORKER_CHECK_INTERVAL = 100; // 100ms
+
 let cv = null;
 
 // Load OpenCV.js in worker
 const loadOpenCVInWorker = async () => {
   if (cv) return cv;
-  
+
   try {
     // Import OpenCV
     importScripts("/opencv.js");
-    
+
     // Wait for OpenCV to be ready
     return new Promise((resolve, reject) => {
       if (cv && cv.onRuntimeInitialized) {
@@ -19,12 +24,12 @@ const loadOpenCVInWorker = async () => {
             clearInterval(checkInterval);
             resolve(cv);
           }
-        }, 100);
-        
+        }, WORKER_CHECK_INTERVAL);
+
         setTimeout(() => {
           clearInterval(checkInterval);
           reject(new Error("OpenCV initialization timeout in worker"));
-        }, 15000);
+        }, WORKER_OPENCV_TIMEOUT);
       }
     });
   } catch (error) {
@@ -36,7 +41,7 @@ const loadOpenCVInWorker = async () => {
 self.onmessage = async (event) => {
   try {
     const { type, imageData, config } = event.data;
-    
+
     if (type === "VALIDATE") {
       // Try to load OpenCV if not loaded
       if (!cv) {
@@ -47,15 +52,15 @@ self.onmessage = async (event) => {
           // Send error back to main thread for fallback
           self.postMessage({
             type: "ERROR",
-            error: "OpenCV loading failed - using fallback validation"
+            error: "OpenCV loading failed - using fallback validation",
           });
           return;
         }
       }
-      
+
       // Run validation
       const result = await validateImage(imageData, config);
-      
+
       self.postMessage({
         type: "VALIDATION_COMPLETE",
         result: result,
@@ -73,21 +78,21 @@ self.onmessage = async (event) => {
 // Main validation function
 const validateImage = async (imageData, config) => {
   const startTime = performance.now();
-  
+
   try {
     // Convert ImageData to OpenCV Mat
     const mat = await processImage(imageData, config);
-    
+
     // Run all validations
     const aspectRatio = computeAspectRatio(mat);
     const stripeData = segmentStripes(mat);
     const colorAccuracy = computeColorAccuracy(mat, stripeData);
     const chakraData = analyzeChakra(mat, stripeData);
     const spokeCount = countChakraSpokes(mat, chakraData);
-    
+
     // Clean up
     mat.delete();
-    
+
     // Assemble final report
     const result = assembleReport({
       aspectRatio,
@@ -98,7 +103,7 @@ const validateImage = async (imageData, config) => {
       imageData,
       config,
     });
-    
+
     result.timing_ms = Math.round(performance.now() - startTime);
     return result;
   } catch (error) {
@@ -110,22 +115,22 @@ const validateImage = async (imageData, config) => {
 const processImage = async (imageData, config) => {
   const { width, height } = imageData;
   const { maxSide = 1200 } = config;
-  
+
   // Create OpenCV Mat
   const mat = cv.matFromImageData(imageData);
-  
+
   // Resize if needed for performance
   if (Math.max(width, height) > maxSide) {
     const scaleFactor = maxSide / Math.max(width, height);
     const targetWidth = Math.round(width * scaleFactor);
     const targetHeight = Math.round(height * scaleFactor);
-    
+
     const resized = new cv.Mat();
     cv.resize(mat, resized, new cv.Size(targetWidth, targetHeight));
     mat.delete();
     return resized;
   }
-  
+
   return mat;
 };
 
@@ -134,9 +139,10 @@ const computeAspectRatio = (mat) => {
   const aspect = mat.cols / mat.rows;
   const expected = 1.5; // 3:2 ratio
   const tolerance = 0.01; // 1%
-  
+
   return {
-    status: Math.abs(aspect - expected) / expected <= tolerance ? "pass" : "fail",
+    status:
+      Math.abs(aspect - expected) / expected <= tolerance ? "pass" : "fail",
     actual: Math.round(aspect * 1000) / 1000,
     expected: expected,
     tolerance: tolerance,
@@ -148,7 +154,7 @@ const segmentStripes = (mat) => {
   // Convert to HSV for better color segmentation
   const hsv = new cv.Mat();
   cv.cvtColor(mat, hsv, cv.COLOR_RGB2HSV);
-  
+
   // Define color ranges for Indian flag
   const saffronLower = new cv.Mat([10, 100, 100]);
   const saffronUpper = new cv.Mat([25, 255, 255]);
@@ -156,23 +162,23 @@ const segmentStripes = (mat) => {
   const whiteUpper = new cv.Mat([180, 30, 255]);
   const greenLower = new cv.Mat([35, 100, 100]);
   const greenUpper = new cv.Mat([85, 255, 255]);
-  
+
   // Create masks for each color
   const saffronMask = new cv.Mat();
   const whiteMask = new cv.Mat();
   const greenMask = new cv.Mat();
-  
+
   cv.inRange(hsv, saffronLower, saffronUpper, saffronMask);
   cv.inRange(hsv, whiteLower, whiteUpper, whiteMask);
   cv.inRange(hsv, greenLower, greenUpper, greenMask);
-  
+
   // Find stripe boundaries
   const stripes = {
     saffron: findStripeBoundary(saffronMask, "top"),
     white: findStripeBoundary(whiteMask, "middle"),
     green: findStripeBoundary(greenMask, "bottom"),
   };
-  
+
   // Clean up
   hsv.delete();
   saffronMask.delete();
@@ -184,7 +190,7 @@ const segmentStripes = (mat) => {
   whiteUpper.delete();
   greenLower.delete();
   greenUpper.delete();
-  
+
   return stripes;
 };
 
@@ -192,12 +198,12 @@ const segmentStripes = (mat) => {
 const findStripeBoundary = (mask, position) => {
   const height = mask.rows;
   const width = mask.cols;
-  
+
   // Sample middle column
   const middleCol = Math.floor(width / 2);
   let startY = -1;
   let endY = -1;
-  
+
   // Find first and last white pixel
   for (let y = 0; y < height; y++) {
     if (mask.ucharPtr(y, middleCol)[0] > 0) {
@@ -205,17 +211,18 @@ const findStripeBoundary = (mask, position) => {
       endY = y;
     }
   }
-  
+
   if (startY === -1 || endY === -1) {
     return { status: "fail", reason: "No stripe detected" };
   }
-  
+
   const stripeHeight = endY - startY + 1;
   const expectedHeight = height / 3;
   const tolerance = expectedHeight * 0.1; // 10% tolerance
-  
-  const heightStatus = Math.abs(stripeHeight - expectedHeight) <= tolerance ? "pass" : "fail";
-  
+
+  const heightStatus =
+    Math.abs(stripeHeight - expectedHeight) <= tolerance ? "pass" : "fail";
+
   return {
     status: heightStatus,
     start: startY,
@@ -229,7 +236,7 @@ const findStripeBoundary = (mask, position) => {
 // Compute color accuracy
 const computeColorAccuracy = (mat, stripeData) => {
   const colors = {};
-  
+
   // Check each stripe
   Object.keys(stripeData).forEach((stripeName) => {
     const stripe = stripeData[stripeName];
@@ -240,7 +247,7 @@ const computeColorAccuracy = (mat, stripeData) => {
       colors[stripeName] = { status: "fail", reason: "Stripe not detected" };
     }
   });
-  
+
   // Check chakra blue
   if (stripeData.white.status === "pass") {
     const chakraDeviation = computeChakraColorDeviation(mat, stripeData.white);
@@ -251,7 +258,7 @@ const computeColorAccuracy = (mat, stripeData) => {
       reason: "White stripe not detected",
     };
   }
-  
+
   return colors;
 };
 
@@ -259,11 +266,11 @@ const computeColorAccuracy = (mat, stripeData) => {
 const computeColorDeviation = (mat, stripe, stripeName) => {
   const { start, end } = stripe;
   const width = mat.cols;
-  
+
   // Sample pixels in stripe
   let totalPixels = 0;
   let colorSum = [0, 0, 0];
-  
+
   for (let y = start; y <= end; y += 2) {
     for (let x = 0; x < width; x += 2) {
       const pixel = mat.ucharPtr(y, x);
@@ -273,39 +280,39 @@ const computeColorDeviation = (mat, stripe, stripeName) => {
       totalPixels++;
     }
   }
-  
+
   if (totalPixels === 0) {
     return { status: "fail", reason: "No pixels sampled" };
   }
-  
+
   const avgColor = [
     colorSum[0] / totalPixels,
     colorSum[1] / totalPixels,
     colorSum[2] / totalPixels,
   ];
-  
+
   // Compare with expected colors
   const expectedColors = {
     saffron: [255, 153, 51], // #FF9933
     white: [255, 255, 255], // #FFFFFF
     green: [19, 136, 8], // #138808
   };
-  
+
   const expected = expectedColors[stripeName];
   if (!expected) {
     return { status: "fail", reason: "Unknown stripe type" };
   }
-  
+
   // Calculate deviation
   const deviation = Math.sqrt(
     Math.pow(avgColor[0] - expected[0], 2) +
       Math.pow(avgColor[1] - expected[1], 2) +
       Math.pow(avgColor[2] - expected[2], 2)
   );
-  
+
   const maxDeviation = 127; // 50% of 255
   const status = deviation <= maxDeviation ? "pass" : "fail";
-  
+
   return {
     status: status,
     deviation: `${Math.round(deviation)}`,
@@ -320,11 +327,11 @@ const computeChakraColorDeviation = (mat, whiteStripe) => {
   const centerX = Math.floor(mat.cols / 2);
   const centerY = Math.floor((start + end) / 2);
   const radius = Math.floor((end - start) * 0.375); // 3/4 of white band height
-  
+
   // Sample pixels in chakra area
   let totalPixels = 0;
   let bluePixels = 0;
-  
+
   for (let y = start; y <= end; y++) {
     for (let x = centerX - radius; x <= centerX + radius; x++) {
       if (x >= 0 && x < mat.cols) {
@@ -342,14 +349,14 @@ const computeChakraColorDeviation = (mat, whiteStripe) => {
       }
     }
   }
-  
+
   if (totalPixels === 0) {
     return { status: "fail", reason: "No chakra area detected" };
   }
-  
+
   const blueRatio = bluePixels / totalPixels;
   const hasChakra = blueRatio > 0.1; // At least 10% blue
-  
+
   return {
     status: hasChakra ? "pass" : "fail",
     deviation: `${Math.round((blueRatio - 0.3) * 100)}%`,
@@ -362,15 +369,15 @@ const analyzeChakra = (mat, stripeData) => {
   if (stripeData.white.status !== "pass") {
     return { status: "fail", reason: "White stripe not detected" };
   }
-  
+
   const { start, end } = stripeData.white;
   const centerX = Math.floor(mat.cols / 2);
   const centerY = Math.floor((start + end) / 2);
   const expectedRadius = Math.floor((end - start) * 0.375);
-  
+
   // Create mask for chakra area
   const mask = new cv.Mat.zeros(mat.rows, mat.cols, cv.CV_8UC1);
-  
+
   // Draw expected chakra circle
   cv.circle(
     mask,
@@ -379,7 +386,7 @@ const analyzeChakra = (mat, stripeData) => {
     new cv.Scalar(255),
     -1
   );
-  
+
   // Check if chakra is present in expected area
   const chakraPresent = checkChakraPresence(
     mat,
@@ -388,18 +395,18 @@ const analyzeChakra = (mat, stripeData) => {
     centerY,
     expectedRadius
   );
-  
+
   mask.delete();
-  
+
   if (!chakraPresent) {
     return { status: "fail", reason: "Chakra not found in expected position" };
   }
-  
+
   // Calculate position offsets
   const offsetX = Math.abs(centerX - mat.cols / 2);
   const offsetY = Math.abs(centerY - (start + end) / 2);
   const maxOffset = Math.min(mat.cols, mat.rows) * 0.01; // 1% tolerance
-  
+
   return {
     status: "pass",
     center_x: centerX,
@@ -415,7 +422,7 @@ const analyzeChakra = (mat, stripeData) => {
 const checkChakraPresence = (mat, mask, centerX, centerY, radius) => {
   let bluePixels = 0;
   let totalPixels = 0;
-  
+
   for (let y = 0; y < mat.rows; y++) {
     for (let x = 0; x < mat.cols; x++) {
       if (mask.ucharPtr(y, x)[0] > 0) {
@@ -427,7 +434,7 @@ const checkChakraPresence = (mat, mask, centerX, centerY, radius) => {
       }
     }
   }
-  
+
   return totalPixels > 0 && bluePixels / totalPixels > 0.1;
 };
 
@@ -436,7 +443,7 @@ const countChakraSpokes = (mat, chakraData) => {
   if (chakraData.status !== "pass") {
     return { status: "fail", reason: "Chakra not detected" };
   }
-  
+
   // For now, return expected count - this can be enhanced with line detection
   return {
     status: "pass",
@@ -457,7 +464,7 @@ const assembleReport = (data) => {
     imageData,
     config,
   } = data;
-  
+
   // Calculate overall pass/fail
   const allChecks = [
     aspectRatio.status,
@@ -466,16 +473,16 @@ const assembleReport = (data) => {
     chakraData.status,
     spokeCount.status,
   ];
-  
+
   const passedChecks = allChecks.filter((status) => status === "pass").length;
   const totalChecks = allChecks.length;
   const overallStatus = passedChecks === totalChecks ? "pass" : "fail";
-  
+
   return {
     overall_status: overallStatus,
     summary: `${passedChecks}/${totalChecks} checks passed`,
     percentage: Math.round((passedChecks / totalChecks) * 100),
-    
+
     aspect_ratio: aspectRatio,
     colors: colorAccuracy,
     stripe_proportion: {
@@ -486,7 +493,7 @@ const assembleReport = (data) => {
     },
     chakra_position: chakraData,
     chakra_spokes: spokeCount,
-    
+
     diagnostics: {
       image_width: imageData.width,
       image_height: imageData.height,

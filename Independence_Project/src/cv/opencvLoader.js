@@ -2,6 +2,11 @@
  * OpenCV.js loader for lazy loading WASM
  */
 
+// Constants for better maintainability
+const SCRIPT_LOAD_TIMEOUT = 15000; // 15 seconds
+const INIT_TIMEOUT = 12000; // 12 seconds
+const CHECK_INTERVAL = 100; // 100ms
+
 // Simple, fast OpenCV.js loader
 const LOCAL_OPENCV = "/opencv.js";
 
@@ -35,7 +40,7 @@ export const loadOpenCV = () => {
     // Shorter timeout for faster failure detection
     const timeout = setTimeout(() => {
       reject(new Error("OpenCV loading timeout"));
-    }, 15000); // 15 seconds
+    }, SCRIPT_LOAD_TIMEOUT); // 15 seconds
 
     script.onload = () => {
       console.log("📦 OpenCV.js script loaded, initializing...");
@@ -49,7 +54,7 @@ export const loadOpenCV = () => {
           console.log("✅ OpenCV.js fully initialized!");
           resolve(window.cv);
         }
-      }, 100);
+      }, CHECK_INTERVAL);
 
       // Fallback timeout
       setTimeout(() => {
@@ -57,7 +62,7 @@ export const loadOpenCV = () => {
         if (!window.cv || !window.cv.onRuntimeInitialized) {
           reject(new Error("OpenCV initialization failed"));
         }
-      }, 12000);
+      }, INIT_TIMEOUT);
     };
 
     script.onerror = () => {

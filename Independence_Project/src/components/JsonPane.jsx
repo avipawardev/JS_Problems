@@ -83,10 +83,6 @@ const JsonPane = () => {
     downloadJson(report, filename);
   };
 
-  const formatStatus = (status) => {
-    return status === "pass" ? "✅ Pass" : "❌ Fail";
-  };
-
   if (!report) {
     return (
       <div className="json-pane">

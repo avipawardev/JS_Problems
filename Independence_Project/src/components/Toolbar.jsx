@@ -2,11 +2,23 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 import useStore from "../state/useStore.jsx";
 import { loadOpenCV, createFallbackValidator } from "../cv/opencvLoader.js";
 
+// Constants for better maintainability
+const OPENCV_LOAD_TIMEOUT = 10000; // 10 seconds
+const MESSAGE_DISPLAY_TIME = 3000; // 3 seconds
+const WORKER_READY_DISPLAY_TIME = 2000; // 2 seconds
+
 const Toolbar = () => {
-  const { imageData, setReport, setProcessing, showDebugOverlay, setShowDebugOverlay, showSamples, setShowSamples } = useStore();
+  const {
+    imageData,
+    setReport,
+    setProcessing,
+    showDebugOverlay,
+    setShowDebugOverlay,
+    showSamples,
+    setShowSamples,
+  } = useStore();
   const [opencvStatus, setOpencvStatus] = useState("initializing");
   const [loadingMessage, setLoadingMessage] = useState("Initializing...");
-  const [fallbackMode, setFallbackMode] = useState(false);
   const workerRef = useRef(null);
   const fallbackValidator = useRef(null);
 
@@ -18,42 +30,49 @@ const Toolbar = () => {
   // Try to load OpenCV with timeout
   useEffect(() => {
     let mounted = true;
-    
+
     const initOpenCV = async () => {
       try {
         setOpencvStatus("loading");
         setLoadingMessage("🚀 Loading OpenCV.js...");
-        
+
         // Try to load OpenCV with a short timeout
         const opencvPromise = loadOpenCV();
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("OpenCV loading timeout")), 10000)
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(
+            () => reject(new Error("OpenCV loading timeout")),
+            OPENCV_LOAD_TIMEOUT
+          )
         );
-        
+
         await Promise.race([opencvPromise, timeoutPromise]);
-        
+
         if (mounted) {
           setOpencvStatus("loaded");
-          setLoadingMessage("✅ OpenCV.js loaded - Ready for real BIS validation!");
+          setLoadingMessage(
+            "✅ OpenCV.js loaded - Ready for real BIS validation!"
+          );
           console.log("✅ OpenCV.js loaded successfully");
-          
+
           // Clear message after 3 seconds
-          setTimeout(() => setLoadingMessage(""), 3000);
+          setTimeout(() => setLoadingMessage(""), MESSAGE_DISPLAY_TIME);
         }
       } catch (error) {
         if (mounted) {
-          console.warn("OpenCV loading failed, using fallback mode:", error.message);
+          console.warn(
+            "OpenCV loading failed, using fallback mode:",
+            error.message
+          );
           setOpencvStatus("fallback");
-          setFallbackMode(true);
           setLoadingMessage("⚠️ Using fast fallback validation");
-          setTimeout(() => setLoadingMessage(""), 3000);
+          setTimeout(() => setLoadingMessage(""), MESSAGE_DISPLAY_TIME);
         }
       }
     };
 
     // Start loading after a short delay
     const timer = setTimeout(initOpenCV, 500);
-    
+
     return () => {
       mounted = false;
       clearTimeout(timer);
@@ -65,7 +84,7 @@ const Toolbar = () => {
     if (opencvStatus === "loaded" && !workerRef.current) {
       try {
         setLoadingMessage("🔧 Initializing validation worker...");
-        
+
         workerRef.current = new Worker(
           new URL("../cv/worker.js", import.meta.url),
           { type: "module" }
@@ -90,12 +109,13 @@ const Toolbar = () => {
           runFallbackValidation();
         };
 
-        setLoadingMessage("🚀 Worker ready - Full OpenCV validation available!");
-        setTimeout(() => setLoadingMessage(""), 2000);
+        setLoadingMessage(
+          "🚀 Worker ready - Full OpenCV validation available!"
+        );
+        setTimeout(() => setLoadingMessage(""), WORKER_READY_DISPLAY_TIME);
       } catch (error) {
         console.error("Failed to create worker:", error);
         setOpencvStatus("fallback");
-        setFallbackMode(true);
         setLoadingMessage("⚠️ Worker failed - Using fallback validation");
       }
     }
@@ -122,7 +142,7 @@ const Toolbar = () => {
       setReport(result);
       setProcessing(false);
       setLoadingMessage("✅ Fallback validation complete");
-      setTimeout(() => setLoadingMessage(""), 2000);
+      setTimeout(() => setLoadingMessage(""), MESSAGE_DISPLAY_TIME);
     } catch (error) {
       console.error("Fallback validation error:", error);
       alert(`Validation failed: ${error.message}`);
@@ -145,11 +165,11 @@ const Toolbar = () => {
         // Use OpenCV validation
         console.log("🔍 Running OpenCV.js validation...");
         setLoadingMessage("🔍 Running computer vision validation...");
-        
+
         workerRef.current.postMessage({
           type: "VALIDATE",
           imageData,
-          config: { maxSide: 1200 }
+          config: { maxSide: 1200 },
         });
       } else {
         // Use fallback validation
@@ -176,14 +196,16 @@ const Toolbar = () => {
   if (opencvStatus === "initializing") {
     return (
       <div className="toolbar">
-        <div style={{
-          background: "#dbeafe",
-          color: "#1e40af",
-          padding: "15px",
-          borderRadius: "8px",
-          textAlign: "center",
-          fontSize: "16px"
-        }}>
+        <div
+          style={{
+            background: "#dbeafe",
+            color: "#1e40af",
+            padding: "15px",
+            borderRadius: "8px",
+            textAlign: "center",
+            fontSize: "16px",
+          }}
+        >
           ⏳ {loadingMessage}
         </div>
       </div>
@@ -214,46 +236,60 @@ const Toolbar = () => {
 
       {/* Status Messages */}
       {loadingMessage && (
-        <div style={{
-          background: opencvStatus === "loaded" ? "#dcfce7" : 
-                     opencvStatus === "fallback" ? "#fef3c7" : "#dbeafe",
-          color: opencvStatus === "loaded" ? "#166534" : 
-                 opencvStatus === "fallback" ? "#92400e" : "#1e40af",
-          padding: "8px 16px",
-          borderRadius: "8px",
-          marginTop: "10px",
-          textAlign: "center",
-          fontSize: "14px"
-        }}>
+        <div
+          style={{
+            background:
+              opencvStatus === "loaded"
+                ? "#dcfce7"
+                : opencvStatus === "fallback"
+                ? "#fef3c7"
+                : "#dbeafe",
+            color:
+              opencvStatus === "loaded"
+                ? "#166534"
+                : opencvStatus === "fallback"
+                ? "#92400e"
+                : "#1e40af",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            marginTop: "10px",
+            textAlign: "center",
+            fontSize: "14px",
+          }}
+        >
           {loadingMessage}
         </div>
       )}
 
       {/* OpenCV Status */}
       {opencvStatus === "loaded" && !loadingMessage && (
-        <div style={{
-          background: "#dcfce7",
-          color: "#166534",
-          padding: "8px 16px",
-          borderRadius: "8px",
-          marginTop: "10px",
-          textAlign: "center",
-          fontSize: "14px"
-        }}>
+        <div
+          style={{
+            background: "#dcfce7",
+            color: "#166534",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            marginTop: "10px",
+            textAlign: "center",
+            fontSize: "14px",
+          }}
+        >
           ✅ OpenCV.js loaded - Ready for real BIS validation
         </div>
       )}
 
       {opencvStatus === "fallback" && !loadingMessage && (
-        <div style={{
-          background: "#fef3c7",
-          color: "#92400e",
-          padding: "8px 16px",
-          borderRadius: "8px",
-          marginTop: "10px",
-          textAlign: "center",
-          fontSize: "14px"
-        }}>
+        <div
+          style={{
+            background: "#fef3c7",
+            color: "#92400e",
+            padding: "8px 16px",
+            borderRadius: "8px",
+            marginTop: "10px",
+            textAlign: "center",
+            fontSize: "14px",
+          }}
+        >
           ⚠️ Fast Fallback Mode - Quick validation without OpenCV.js
           <br />
           <small>Upload a wrong flag to test the improved validation</small>
