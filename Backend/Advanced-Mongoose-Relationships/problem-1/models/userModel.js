@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }
+    name: { type: String, required: true, minlength: 3 },
+    email: { type: String, required: true, unique: true }
 });
 
 const userModel = mongoose.model('User',userSchema);

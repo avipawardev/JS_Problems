@@ -16,7 +16,6 @@ const RecipeCard = () => {
         <ul>{ele.ingredients.map((ele)=> <li>{ele}</li>)}</ul>
         <i onClick={()=>setFav(!fav)} class="ri-heart-line" style={{color:fav?'red':'black'}}></i>
     </div>)}
-    {console.log(recipes)}
     </div>
   )
 }
