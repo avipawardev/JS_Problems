@@ -36,7 +36,7 @@ authRouter.post('/login',async(req,res)=>{
     }
 })
 
-authRouter.post('/request-reset', async(req, res) => {
+authRouter.post('/forget-reset', async(req, res) => {
     try {
         const { email } = req.body;
         let user = await userModel.findOne({ email });
