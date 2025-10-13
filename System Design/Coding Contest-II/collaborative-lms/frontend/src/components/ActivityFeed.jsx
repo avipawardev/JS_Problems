@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../api/axiosInstance.js';
+import useSocket from '../hooks/useSocket.js';
 
 const ActivityFeed = () => {
   const [activities, setActivities] = useState([]);
+  const { socket, activities: realtimeActivities } = useSocket();
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -15,6 +17,12 @@ const ActivityFeed = () => {
     };
     fetchActivities();
   }, []);
+
+  useEffect(() => {
+    if (realtimeActivities.length > 0) {
+      setActivities(prev => [...realtimeActivities, ...prev].slice(0, 20));
+    }
+  }, [realtimeActivities]);
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import CommentBox from '../components/CommentBox';
-import axiosInstance from '../api/axiosInstance';
-import useSocket from '../hooks/useSocket';
+import Navbar from '../components/Navbar.jsx';
+import CommentBox from '../components/CommentBox.jsx';
+import axiosInstance from '../api/axiosInstance.js';
+import useSocket from '../hooks/useSocket.js';
+import useAuth from '../hooks/useAuth.js';
 
 const LessonPage = () => {
   const { id } = useParams();
   const [lesson, setLesson] = useState(null);
   const [comments, setComments] = useState([]);
-  const { socket } = useSocket();
+  const { socket, joinLesson } = useSocket();
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -28,25 +30,66 @@ const LessonPage = () => {
   }, [id]);
 
   useEffect(() => {
-    if (socket) {
-      socket.emit('join-lesson', id);
-      socket.on('comment-added', (newComment) => {
+    if (socket && id) {
+      joinLesson(id);
+      
+      const handleCommentAdded = (newComment) => {
         setComments(prev => [...prev, newComment]);
-      });
+      };
+      
+      const handleCommentDeleted = ({ commentId }) => {
+        setComments(prev => prev.filter(c => c._id !== commentId));
+      };
+      
+      socket.on('comment_added', handleCommentAdded);
+      socket.on('comment_deleted', handleCommentDeleted);
+      
+      return () => {
+        socket.off('comment_added', handleCommentAdded);
+        socket.off('comment_deleted', handleCommentDeleted);
+      };
     }
-  }, [socket, id]);
+  }, [socket, id, joinLesson]);
 
   const handleCommentAdded = (newComment) => {
     setComments(prev => [...prev, newComment]);
   };
 
-  if (!lesson) return <div>Loading...</div>;
+  const markComplete = async () => {
+    try {
+      await axiosInstance.post(`/lessons/${id}/complete`);
+      alert('Lesson marked as complete!');
+    } catch (error) {
+      console.error('Error marking lesson complete:', error);
+    }
+  };
+
+  const deleteComment = async (commentId) => {
+    try {
+      await axiosInstance.delete(`/comments/${commentId}`);
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  };
+
+  if (!lesson) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">{lesson.title}</h1>
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-3xl font-bold">{lesson.title}</h1>
+          {user?.role === 'student' && (
+            <button
+              onClick={markComplete}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Mark Complete
+            </button>
+          )}
+        </div>
+        
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="prose max-w-none">
             {lesson.content}
@@ -58,11 +101,33 @@ const LessonPage = () => {
           <div className="space-y-4 mb-6">
             {comments.map((comment) => (
               <div key={comment._id} className="border-b pb-4">
-                <p className="font-medium">{comment.author.name}</p>
-                <p className="text-gray-700">{comment.content}</p>
-                <p className="text-sm text-gray-500">
-                  {new Date(comment.createdAt).toLocaleString()}
-                </p>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="font-medium">{comment.author.name}</p>
+                    <p className="text-gray-700">{comment.content}</p>
+                    <p className="text-sm text-gray-500">
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                  {comment.author._id === user?.id && (
+                    <button
+                      onClick={() => deleteComment(comment._id)}
+                      className="text-red-500 hover:text-red-700 text-sm"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+                {comment.replies && comment.replies.length > 0 && (
+                  <div className="ml-6 mt-2 space-y-2">
+                    {comment.replies.map((reply) => (
+                      <div key={reply._id} className="bg-gray-50 p-2 rounded">
+                        <p className="font-medium text-sm">{reply.author.name}</p>
+                        <p className="text-gray-700 text-sm">{reply.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

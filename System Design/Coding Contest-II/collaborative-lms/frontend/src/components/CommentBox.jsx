@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
-import axiosInstance from '../api/axiosInstance';
-import useSocket from '../hooks/useSocket';
+import axiosInstance from '../api/axiosInstance.js';
+import useSocket from '../hooks/useSocket.js';
 
-const CommentBox = ({ lessonId, onCommentAdded }) => {
+const CommentBox = ({ lessonId, parentCommentId = null, onCommentAdded, placeholder = "Add a comment..." }) => {
   const [comment, setComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { socket } = useSocket();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!comment.trim() || isSubmitting) return;
+    
+    setIsSubmitting(true);
     try {
       const response = await axiosInstance.post('/comments', {
-        content: comment,
-        lesson: lessonId
+        content: comment.trim(),
+        lesson: lessonId,
+        ...(parentCommentId && { parentComment: parentCommentId })
       });
-      socket?.emit('new-comment', { ...response.data, lessonId });
+      socket?.emit('comment_added', { ...response.data, lessonId });
       onCommentAdded(response.data);
       setComment('');
     } catch (error) {
       console.error('Error adding comment:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -26,13 +33,20 @@ const CommentBox = ({ lessonId, onCommentAdded }) => {
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Add a comment..."
-        className="w-full p-2 border rounded"
+        placeholder={placeholder}
+        className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         rows="3"
+        required
       />
-      <button type="submit" className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">
-        Post Comment
-      </button>
+      <div className="flex justify-end mt-2">
+        <button 
+          type="submit" 
+          disabled={!comment.trim() || isSubmitting}
+          className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Posting...' : 'Post Comment'}
+        </button>
+      </div>
     </form>
   );
 };

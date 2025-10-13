@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
-import axiosInstance from '../api/axiosInstance';
+import Navbar from '../components/Navbar.jsx';
+import Sidebar from '../components/Sidebar.jsx';
+import axiosInstance from '../api/axiosInstance.js';
 
 const InstructorDashboard = () => {
   const [courses, setCourses] = useState([]);

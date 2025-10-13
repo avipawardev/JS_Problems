@@ -15,13 +15,16 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+app.set('io', io);
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/lessons', require('./routes/lessonRoutes'));
 app.use('/api/comments', require('./routes/commentRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/activities', require('./routes/activityRoutes'));
 
 socketManager(io);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
