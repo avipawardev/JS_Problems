@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 import CommentBox from '../components/CommentBox.jsx';
+import LessonPlayer from '../components/LessonPlayer.jsx';
 import axiosInstance from '../api/axiosInstance.js';
 import useSocket from '../hooks/useSocket.js';
 import useAuth from '../hooks/useAuth.js';
@@ -78,21 +79,30 @@ const LessonPage = () => {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold">{lesson.title}</h1>
-          {user?.role === 'student' && (
-            <button
-              onClick={markComplete}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Mark Complete
-            </button>
-          )}
-        </div>
-        
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="prose max-w-none">
-            {lesson.content}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <LessonPlayer lesson={lesson} />
+            
+            {user?.role === 'student' && (
+              <button
+                onClick={markComplete}
+                className="w-full mt-4 bg-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-600"
+              >
+                ✓ Mark as Complete
+              </button>
+            )}
+          </div>
+          
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
+              <h3 className="text-lg font-semibold mb-4">Course: {lesson.course?.title}</h3>
+              <div className="text-sm text-gray-600">
+                <p className="mb-2">Lesson {lesson.order}</p>
+                {lesson.duration && (
+                  <p>Duration: {Math.floor(lesson.duration / 60)}:{(lesson.duration % 60).toString().padStart(2, '0')}</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
