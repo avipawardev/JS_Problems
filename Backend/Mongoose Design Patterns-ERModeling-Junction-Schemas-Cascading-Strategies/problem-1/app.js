@@ -9,7 +9,6 @@ app.use('/students',studentRouter)
 app.use('/courses',courseRouter);
 app.use('/enroll',enrollRoutes);
 
-
 app.listen(3000, () => {
     connectToDb();
     console.log('Server is running on port 3000');

@@ -9,6 +9,7 @@ courseRouter.post('/create',async(req,res)=>{
         let course = await courseModel.create(req.body);
         res.status(201).json({message: 'course created successfully', course});   
     } catch (error) {
+        console.log(error)
         res.status(500).json({message: error.message})
     }
 })
@@ -16,7 +17,6 @@ courseRouter.post('/create',async(req,res)=>{
 courseRouter.get('/all/:id/students', async(req,res)=>{
     try {
         let enrollments = await enrollmentModel.find({courseId: req.params.id, isActive: true}).populate('studentId');
-        // let students = enrollments.map(e => e.studentId).filter(s => s.isActive);
         res.json(enrollments);
     } catch (error) {
         res.status(500).json({message: error.message})

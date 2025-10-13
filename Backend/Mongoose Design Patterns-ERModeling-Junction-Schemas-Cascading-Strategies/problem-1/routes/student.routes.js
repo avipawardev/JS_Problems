@@ -15,7 +15,6 @@ studentRouter.post('/create',async(req,res)=>{
 studentRouter.get('/all/:id/courses', async(req,res)=>{
     try {
         let enrollments = await enrollmentModel.find({studentId: req.params.id, isActive: true}).populate('courseId');
-        // let courses = enrollments.map(e => e.courseId).filter(c => c.isActive);
         res.json(enrollments);
     } catch (error) {
         res.status(500).json({message: error.message})
