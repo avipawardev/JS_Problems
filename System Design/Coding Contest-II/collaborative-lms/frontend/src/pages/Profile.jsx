@@ -4,9 +4,15 @@ import useAuth from '../hooks/useAuth.js';
 import axiosInstance from '../api/axiosInstance.js';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    bio: user?.bio || '',
+    avatar: user?.avatar || ''
+  });
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -20,7 +26,27 @@ const Profile = () => {
       }
     };
     fetchOrders();
-  }, []);
+    if (user) {
+      setFormData({
+        name: user.name || '',
+        bio: user.bio || '',
+        avatar: user.avatar || ''
+      });
+    }
+  }, [user]);
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.put('/users/profile', formData);
+      const token = localStorage.getItem('token');
+      login(token, { ...user, ...response.data });
+      setEditing(false);
+      alert('Profile updated successfully!');
+    } catch (error) {
+      alert('Failed to update profile');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -31,18 +57,89 @@ const Profile = () => {
           
           {/* Profile Info */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <div className="flex items-center mb-4">
-              <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
-                {user?.name?.charAt(0).toUpperCase()}
-              </div>
-              <div className="ml-4">
-                <h2 className="text-2xl font-bold">{user?.name}</h2>
-                <p className="text-gray-600">{user?.email}</p>
-                <span className="inline-block mt-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                  {user?.role}
-                </span>
-              </div>
-            </div>
+            {!editing ? (
+              <>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    {user?.avatar ? (
+                      <img src={user.avatar} alt={user.name} className="w-20 h-20 rounded-full" />
+                    ) : (
+                      <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                        {user?.name?.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div className="ml-4">
+                      <h2 className="text-2xl font-bold">{user?.name}</h2>
+                      <p className="text-gray-600">{user?.email}</p>
+                      {user?.bio && <p className="text-sm text-gray-500 mt-1">{user.bio}</p>}
+                      <span className="inline-block mt-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                        {user?.role}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setEditing(true)}
+                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              </>
+            ) : (
+              <form onSubmit={handleUpdateProfile}>
+                <h3 className="text-xl font-bold mb-4">Edit Profile</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Name</label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="w-full px-4 py-2 border rounded-lg"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Bio</label>
+                    <textarea
+                      value={formData.bio}
+                      onChange={(e) => setFormData({...formData, bio: e.target.value})}
+                      className="w-full px-4 py-2 border rounded-lg"
+                      rows="3"
+                      placeholder="Tell us about yourself"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Avatar URL</label>
+                    <input
+                      type="url"
+                      value={formData.avatar}
+                      onChange={(e) => setFormData({...formData, avatar: e.target.value})}
+                      className="w-full px-4 py-2 border rounded-lg"
+                      placeholder="https://example.com/avatar.jpg"
+                    />
+                    {formData.avatar && (
+                      <img src={formData.avatar} alt="Preview" className="mt-2 w-20 h-20 rounded-full" />
+                    )}
+                  </div>
+                  <div className="flex space-x-3">
+                    <button
+                      type="submit"
+                      className="flex-1 bg-purple-600 text-white py-2 rounded hover:bg-purple-700"
+                    >
+                      Save Changes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditing(false)}
+                      className="flex-1 bg-gray-300 text-gray-700 py-2 rounded hover:bg-gray-400"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
           </div>
 
           {/* Purchase History */}

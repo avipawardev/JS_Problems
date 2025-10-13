@@ -18,6 +18,7 @@ app.use(express.json());
 app.set('io', io);
 
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/lessons', require('./routes/lessonRoutes'));
 app.use('/api/comments', require('./routes/commentRoutes'));

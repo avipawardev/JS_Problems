@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 import CourseCard from '../components/CourseCard.jsx';
 import axiosInstance from '../api/axiosInstance.js';
 
 const CourseListingPage = () => {
+  const [searchParams] = useSearchParams();
   const [courses, setCourses] = useState([]);
   const [filters, setFilters] = useState({
-    search: '',
-    category: '',
+    search: searchParams.get('search') || '',
+    category: searchParams.get('category') || '',
     level: '',
     priceRange: ''
   });
@@ -23,6 +25,18 @@ const CourseListingPage = () => {
     { label: '$50 - $100', value: '50-100' },
     { label: 'Over $100', value: '100+' }
   ];
+
+  useEffect(() => {
+    const category = searchParams.get('category');
+    const search = searchParams.get('search');
+    if (category || search) {
+      setFilters(prev => ({
+        ...prev,
+        category: category || prev.category,
+        search: search || prev.search
+      }));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchCourses();

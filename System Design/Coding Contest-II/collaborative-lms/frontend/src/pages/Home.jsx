@@ -13,12 +13,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [featuredInstructors] = useState([
-    { id: 1, name: 'Dr. Sarah Johnson', expertise: 'AI & Machine Learning', image: 'https://i.pravatar.cc/150?img=1', courses: 12 },
-    { id: 2, name: 'Prof. Michael Chen', expertise: 'Web Development', image: 'https://i.pravatar.cc/150?img=2', courses: 18 },
-    { id: 3, name: 'Emily Rodriguez', expertise: 'Data Science', image: 'https://i.pravatar.cc/150?img=3', courses: 15 },
-    { id: 4, name: 'David Kumar', expertise: 'Business Strategy', image: 'https://i.pravatar.cc/150?img=4', courses: 10 }
-  ]);
+  const [featuredInstructors, setFeaturedInstructors] = useState([]);
 
   const categories = [
     { name: 'Technology', icon: '💻', courses: 245 },
@@ -32,7 +27,17 @@ const Home = () => {
 
   useEffect(() => {
     fetchCourses();
+    fetchInstructors();
   }, [search, category, level, currentPage]);
+
+  const fetchInstructors = async () => {
+    try {
+      const response = await axiosInstance.get('/users/instructors');
+      setFeaturedInstructors(response.data.slice(0, 4));
+    } catch (error) {
+      console.error('Error fetching instructors:', error);
+    }
+  };
 
   const fetchCourses = async () => {
     setLoading(true);
@@ -69,10 +74,21 @@ const Home = () => {
                 placeholder="Search for anything"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && setCurrentPage(1)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && search.trim()) {
+                    navigate(`/courses?search=${encodeURIComponent(search)}`);
+                  }
+                }}
                 className="w-full px-6 py-4 rounded-full text-gray-800 text-lg shadow-lg focus:outline-none focus:ring-4 focus:ring-purple-300"
               />
-              <button className="absolute right-2 top-2 bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700">
+              <button
+                onClick={() => {
+                  if (search.trim()) {
+                    navigate(`/courses?search=${encodeURIComponent(search)}`);
+                  }
+                }}
+                className="absolute right-2 top-2 bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700"
+              >
                 Search
               </button>
             </div>
@@ -85,15 +101,15 @@ const Home = () => {
         <h2 className="text-3xl font-bold mb-8">Top Categories</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((cat, idx) => (
-            <div
+            <Link
               key={idx}
-              onClick={() => { setCategory(cat.name); setCurrentPage(1); }}
+              to={`/courses?category=${encodeURIComponent(cat.name)}`}
               className="bg-gray-50 hover:bg-purple-50 p-6 rounded-lg cursor-pointer transition border border-gray-200 hover:border-purple-300"
             >
               <div className="text-4xl mb-3">{cat.icon}</div>
               <h3 className="font-semibold mb-1">{cat.name}</h3>
               <p className="text-sm text-gray-600">{cat.courses} courses</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -104,16 +120,23 @@ const Home = () => {
           <h2 className="text-3xl font-bold mb-8">Featured Instructors</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredInstructors.map((instructor) => (
-              <div key={instructor.id} className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-xl transition">
+              <Link
+                key={instructor._id}
+                to={`/instructor/${instructor._id}`}
+                className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-xl transition cursor-pointer"
+              >
                 <img
-                  src={instructor.image}
+                  src={instructor.avatar || `https://i.pravatar.cc/150?u=${instructor._id}`}
                   alt={instructor.name}
                   className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-purple-200"
                 />
                 <h3 className="font-bold text-lg mb-1">{instructor.name}</h3>
-                <p className="text-sm text-gray-600 mb-2">{instructor.expertise}</p>
-                <p className="text-xs text-purple-600 font-semibold">{instructor.courses} Courses</p>
-              </div>
+                <p className="text-sm text-gray-600 mb-2">{instructor.bio || 'Professional Instructor'}</p>
+                <div className="flex items-center justify-center space-x-2 text-xs text-purple-600 font-semibold">
+                  <span>📚 {instructor.coursesCount} Courses</span>
+                  <span>⭐ {instructor.rating}</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
