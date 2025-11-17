@@ -19,7 +19,7 @@ export default function DesignCard({ design, index = 0 }) {
     >
       <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 h-full flex flex-col border border-gray-100">
         {/* Image Container */}
-        <div className="relative h-64 overflow-hidden bg-gray-50">
+        <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-gray-50">
           <img
             src={design.image}
             alt={design.title}
@@ -95,8 +95,8 @@ export default function DesignCard({ design, index = 0 }) {
         </div>
 
         {/* Content Section */}
-        <div className="p-6 flex-1 flex flex-col bg-white">
-          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300 leading-tight line-clamp-2 font-['Gilroy']">
+        <div className="p-4 sm:p-6 flex-1 flex flex-col bg-white">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-primary-600 transition-colors duration-300 leading-tight line-clamp-2 font-['Gilroy']">
             {design.title}
           </h3>
 
@@ -105,7 +105,7 @@ export default function DesignCard({ design, index = 0 }) {
           </p>
 
           {/* Highlights */}
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
             {design.highlights &&
               Object.entries(design.highlights)
                 .slice(0, 2)

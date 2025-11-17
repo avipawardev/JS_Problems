@@ -102,7 +102,10 @@ export default function HeroSection() {
             </div>
 
             {/* 3D Enhanced Typography */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-8 animate-slide-up leading-tight preserve-3d hover-tilt-3d transition-transform duration-700 font-['Gilroy']">
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 animate-slide-up preserve-3d hover-tilt-3d transition-transform duration-700 font-['Gilroy']"
+              style={{ lineHeight: "1.1" }}
+            >
               <span className="block bg-linear-to-r from-white via-primary-200 to-accent-200 bg-clip-text text-transparent drop-shadow-2xl animate-depth-pulse">
                 Design Your
               </span>
@@ -116,23 +119,15 @@ export default function HeroSection() {
             </h1>
 
             <p
-              className="text-lg md:text-xl lg:text-2xl text-white/90 mb-12 animate-fade-in leading-relaxed max-w-4xl mx-auto font-light"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-white mb-8 sm:mb-12 animate-fade-in leading-relaxed max-w-3xl mx-auto font-light px-4 sm:px-6 md:px-8"
               style={{ animationDelay: "0.2s" }}
             >
               Transform your vision into reality with cutting-edge architectural
-              designs that blend
-              <span className="font-semibold bg-linear-to-r from-primary-200 to-accent-200 bg-clip-text text-transparent">
-                {" "}
-                innovation
-              </span>
-              ,
-              <span className="font-semibold bg-linear-to-r from-accent-200 to-secondary-200 bg-clip-text text-transparent">
-                {" "}
-                functionality
-              </span>
-              , and
-              <span className="font-semibold bg-linear-to-r from-secondary-200 to-primary-200 bg-clip-text text-transparent">
-                {" "}
+              designs that blend{" "}
+              <span className="font-semibold text-white">innovation</span>,{" "}
+              <span className="font-semibold text-white">functionality</span>,
+              and{" "}
+              <span className="font-semibold text-white">
                 timeless elegance
               </span>
               .
@@ -140,7 +135,7 @@ export default function HeroSection() {
 
             {/* 3D Premium CTA Buttons */}
             <div
-              className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in preserve-3d"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center animate-fade-in preserve-3d px-4 sm:px-0"
               style={{ animationDelay: "0.4s" }}
             >
               <button
@@ -149,7 +144,7 @@ export default function HeroSection() {
                     .getElementById("designs")
                     .scrollIntoView({ behavior: "smooth" })
                 }
-                className="group relative px-8 py-4 bg-white text-surface-900 rounded-3xl font-bold text-lg overflow-hidden transition-all duration-700 hover-lift-3d active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-3d-xl font-['Gilroy'] preserve-3d"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-white text-surface-900 rounded-3xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-700 hover-lift-3d active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-3d-xl font-['Gilroy'] preserve-3d"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   <span>Explore 3D Designs</span>
@@ -177,7 +172,7 @@ export default function HeroSection() {
                     .getElementById("contact")
                     .scrollIntoView({ behavior: "smooth" })
                 }
-                className="group relative px-8 py-4 bg-white/15 backdrop-blur-2xl border-2 border-white/40 text-white hover:bg-white/25 rounded-3xl font-bold text-lg overflow-hidden transition-all duration-700 hover-lift-3d active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-3d-lg font-['Gilroy'] preserve-3d"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-white/15 backdrop-blur-2xl border-2 border-white/40 text-white hover:bg-white/25 rounded-3xl font-bold text-base sm:text-lg overflow-hidden transition-all duration-700 hover-lift-3d active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/30 shadow-3d-lg font-['Gilroy'] preserve-3d"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   <svg
@@ -201,7 +196,7 @@ export default function HeroSection() {
             </div>
 
             {/* 3D Stats Section */}
-            <div className="grid grid-cols-3 gap-8 mt-16 max-w-2xl mx-auto preserve-3d">
+            <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-16 max-w-2xl mx-auto preserve-3d px-4 sm:px-0">
               {[
                 {
                   number: "500+",
@@ -216,15 +211,15 @@ export default function HeroSection() {
                   className="text-center group preserve-3d hover-3d transition-transform duration-500"
                 >
                   <div
-                    className={`text-4xl font-black text-white mb-2 bg-linear-to-r from-${stat.color}-200 to-${stat.color}-100 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300 animate-depth-pulse font-['Gilroy']`}
+                    className={`text-2xl sm:text-4xl font-black text-white mb-1 sm:mb-2 bg-linear-to-r from-${stat.color}-200 to-${stat.color}-100 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300 animate-depth-pulse font-['Gilroy']`}
                   >
                     {stat.number}
                   </div>
-                  <div className="text-white/70 text-sm font-medium group-hover:text-white/90 transition-colors font-['Gilroy']">
+                  <div className="text-white/70 text-xs sm:text-sm font-medium group-hover:text-white/90 transition-colors font-['Gilroy'] leading-tight">
                     {stat.label}
                   </div>
                   <div
-                    className={`w-8 h-1 bg-linear-to-r from-${stat.color}-400 to-${stat.color}-600 mx-auto mt-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-3d`}
+                    className={`w-6 sm:w-8 h-0.5 sm:h-1 bg-linear-to-r from-${stat.color}-400 to-${stat.color}-600 mx-auto mt-1 sm:mt-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-3d`}
                   ></div>
                 </div>
               ))}

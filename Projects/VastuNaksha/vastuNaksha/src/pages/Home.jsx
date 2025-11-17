@@ -50,7 +50,7 @@ export default function Home() {
       {/* Categories Section */}
       <section
         id="designs"
-        className="py-24 bg-linear-to-br from-white via-secondary-50/30 to-primary-50/20 relative"
+        className="py-16 sm:py-20 md:py-24 bg-linear-to-br from-white via-secondary-50/30 to-primary-50/20 relative"
       >
         {/* Background decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -68,14 +68,14 @@ export default function Home() {
               </svg>
               Our Design Collection
             </div>
-            <h2 className="text-4xl lg:text-6xl font-bold text-secondary-900 mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-secondary-900 mb-4 sm:mb-6 leading-tight">
               Explore{" "}
               <span className="bg-linear-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
                 Architectural
               </span>{" "}
               Masterpieces
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
               Discover our curated collection of modern architectural designs,
               from contemporary homes to innovative interiors. Each design tells
               a unique story of creativity and functionality.
@@ -103,7 +103,7 @@ export default function Home() {
       {/* Modern About Section */}
       <section
         id="about"
-        className="py-24 bg-linear-to-br from-secondary-50 via-white to-primary-50/30 relative overflow-hidden"
+        className="py-16 sm:py-20 md:py-24 bg-linear-to-br from-secondary-50 via-white to-primary-50/30 relative overflow-hidden"
       >
         {/* Background decorative elements */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
@@ -128,14 +128,14 @@ export default function Home() {
                   </svg>
                   Why Choose VastuNaksha
                 </div>
-                <h2 className="text-4xl lg:text-5xl font-bold text-secondary-900 leading-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 leading-tight">
                   Crafting{" "}
                   <span className="bg-linear-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
                     Exceptional
                   </span>{" "}
                   Architectural Experiences
                 </h2>
-                <p className="text-lg text-secondary-600 leading-relaxed max-w-xl">
+                <p className="text-base sm:text-lg text-secondary-600 leading-relaxed max-w-xl">
                   We blend innovative design thinking with practical
                   functionality to create spaces that inspire, comfort, and
                   endure.
@@ -297,7 +297,7 @@ export default function Home() {
       {/* Simple Contact Section */}
       <section
         id="contact"
-        className="py-24 bg-linear-to-br from-white via-secondary-50/30 to-primary-50/20 relative"
+        className="py-16 sm:py-20 md:py-24 bg-linear-to-br from-white via-secondary-50/30 to-primary-50/20 relative"
       >
         {/* Background decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -312,13 +312,13 @@ export default function Home() {
             {/* Contact Information */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 font-['Gilroy']">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4 sm:mb-6 font-['Gilroy']">
                   Let's Create Something
                   <span className="block bg-linear-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
                     Extraordinary
                   </span>
                 </h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
+                <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
                   Transform your architectural dreams into reality with our
                   expert team. From concept to completion, we bring unparalleled
                   creativity and technical excellence to every project.

@@ -114,11 +114,11 @@ export default function DesignDetails() {
               <div className="inline-block px-4 py-2 bg-black/80 text-white text-sm font-semibold rounded-full backdrop-blur-sm mb-4">
                 {design.category}
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate-slide-up">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 animate-slide-up">
                 {design.title}
               </h1>
               {design.size && (
-                <div className="inline-block px-6 py-3 bg-white/90 text-black text-lg font-semibold rounded-full backdrop-blur-sm">
+                <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-white/90 text-black text-base sm:text-lg font-semibold rounded-full backdrop-blur-sm">
                   Plot Size: {design.size}
                 </div>
               )}
@@ -132,7 +132,7 @@ export default function DesignDetails() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Description Column */}
           <div className="lg:col-span-1">
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-8">
               {design.description}
             </p>
           </div>
@@ -143,14 +143,17 @@ export default function DesignDetails() {
               <h3 className="text-2xl font-bold text-black mb-6">
                 Key Features
               </h3>
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {design.highlights &&
                   Object.entries(design.highlights).map(([key, value]) => (
-                    <div key={key} className="border-l-4 border-black pl-4">
+                    <div
+                      key={key}
+                      className="border-l-4 border-black pl-3 sm:pl-4"
+                    >
                       <p className="text-gray-600 text-sm capitalize">
                         {key.replace(/_/g, " ")}
                       </p>
-                      <p className="text-xl font-bold text-black">
+                      <p className="text-lg sm:text-xl font-bold text-black">
                         {typeof value === "boolean"
                           ? value
                             ? "Yes"
@@ -168,11 +171,11 @@ export default function DesignDetails() {
             <div className="flex flex-col gap-4 pt-8">
               <button
                 onClick={sendWhatsAppMessage}
-                className="group relative w-full px-8 py-4 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-500/20 overflow-hidden"
+                className="group relative w-full px-6 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-500/20 overflow-hidden"
               >
-                <span className="relative z-10 flex items-center justify-center gap-3 text-lg">
+                <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3 text-base sm:text-lg">
                   <svg
-                    className="w-6 h-6 transition-transform duration-300 group-hover:scale-110"
+                    className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:scale-110"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -187,11 +190,11 @@ export default function DesignDetails() {
               </button>
               <button
                 onClick={() => navigate("/")}
-                className="group relative w-full px-8 py-4 border-2 border-black text-black hover:text-white rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-4 focus:ring-black/20 overflow-hidden"
+                className="group relative w-full px-6 sm:px-8 py-3 sm:py-4 border-2 border-black text-black hover:text-white rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-4 focus:ring-black/20 overflow-hidden"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2">
+                <span className="relative z-10 flex items-center justify-center gap-2 text-base sm:text-lg">
                   <svg
-                    className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"
+                    className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:-translate-x-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -226,31 +229,31 @@ export default function DesignDetails() {
       {relatedDesigns.length > 0 && (
         <section className="py-16 bg-gray-50 border-t border-gray-200">
           <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-black mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 sm:mb-12">
               Similar Designs
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {relatedDesigns.map((relatedDesign) => (
                 <div
                   key={relatedDesign.id}
                   onClick={() => navigate(`/design/${relatedDesign.id}`)}
                   className="cursor-pointer group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
                 >
-                  <div className="relative h-40 overflow-hidden bg-gray-200">
+                  <div className="relative h-32 sm:h-40 overflow-hidden bg-gray-200">
                     <img
                       src={relatedDesign.image}
                       alt={relatedDesign.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-black mb-2">
+                  <div className="p-4 sm:p-5">
+                    <h3 className="font-bold text-black mb-2 text-base sm:text-lg">
                       {relatedDesign.title}
                     </h3>
-                    <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+                    <p className="text-gray-600 text-sm line-clamp-2 mb-3 sm:mb-4">
                       {relatedDesign.description}
                     </p>
-                    <div className="flex items-center gap-2 text-black font-semibold text-sm">
+                    <div className="flex items-center gap-2 text-black font-semibold text-sm mt-2">
                       View
                       <svg
                         className="w-4 h-4 group-hover:translate-x-1 transition-transform"

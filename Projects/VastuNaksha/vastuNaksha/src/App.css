@@ -1,12 +1,12 @@
+/* Questrial Font Family */
+@import url("https://fonts.googleapis.com/css2?family=Questrial&display=swap");
+
 @import "tailwindcss";
 
-/* Gilroy Font Family */
-@import url("https://fonts.googleapis.com/css2?family=Gilroy:wght@300;400;500;600;700;800;900&display=swap");
-
-/* Apply Gilroy font globally */
+/* Apply Questrial font globally */
 * {
-  font-family: "Gilroy", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  font-family: "Questrial", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
 }
 
 /* Full width layout */
