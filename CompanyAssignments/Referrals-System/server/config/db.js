@@ -1,0 +1,12 @@
+const mongoose = require("mongoose");
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI||"mongodb+srv://pravanshpatel6pp_db_user:i0WXSZFHnh1riVHq@improvemycity.niwwd0i.mongodb.net/?appName=ImproveMyCity");
+    console.log("MongoDB Connected");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = connectDB;
